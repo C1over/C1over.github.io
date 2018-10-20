@@ -1,3 +1,16 @@
+---
+layout:     post   				    
+title:    Andorid Components （1）  				 
+subtitle:  Activity        #副标题
+date:       2018-7-10			   	# 时间
+author:     BY 		Cc1over				# 作者
+header-img: img/post-bg-2015.jpg 	#这篇文章标题背景图片
+catalog: true 						# 是否归档
+tags:								#标签
+    - Android
+---
+
+
 ## 1、Acitvity的生命周期
 ### onCreate（）
 * 当Activity第一次创建的时候调用。这个方法里主要是提供给我们做一些初始化操作，如：创建view、绑定数据到view。
