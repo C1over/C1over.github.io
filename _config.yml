@@ -1,7 +1,7 @@
 # Site settings
 title: C1☆ Blog
 SEOTitle: Cc1over的博客 | C1☆ Blog
-header-img: img/c1over_icon.jpg
+header-img: img/c1over_bg.jpg
 email: 490208164@qq.com
 description: "If you want to go beyond, you must first know where the distance is."
 keyword: ""
@@ -12,7 +12,7 @@ github_repo: "https://github.com/C1over/C1over.github.io.git" # you code reposit
 # Sidebar settings
 sidebar: true                           # whether or not using Sidebar.
 sidebar-about-description: "An obscure Android developer"
-sidebar-avatar: /img/about-BY-gentle.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
+sidebar-avatar: /img/c1over_icon.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
 
 
 
