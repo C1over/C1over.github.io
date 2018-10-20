@@ -2,7 +2,7 @@
 layout:     post   				    
 title:  EventBus（1）				 
 subtitle:  响应式框架     #副标题
-date:       2018-7-10			   	# 时间
+date:       2018-9-6			   	# 时间
 author:     BY 		Cc1over				# 作者
 header-img: img/post-bg-2015.jpg 	#这篇文章标题背景图片
 catalog: true 						# 是否归档
