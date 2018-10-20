@@ -4,8 +4,8 @@ SEOTitle: Cc1over的博客 | C1☆ Blog
 header-img: img/post-bg-desk.jpg
 email: qiubaiying@gmail.com
 description: "Every failure is leading towards success."
-keyword: "BY, BY Blog, 柏荧的博客, qiubaiying, 邱柏荧, iOS, Apple, iPhone"
-url: "http://qiubaiying.github.io"          # your host, for absolute URL
+keyword: ""
+url: "http://C1over.github.io"          # your host, for absolute URL
 baseurl: ""      # for example, '/blog' if your blog hosted on 'host/blog'
 github_repo: "https://github.com/qiubaiying/qiubaiying.github.io.git" # you code repository
 
@@ -20,7 +20,7 @@ sidebar-avatar: /img/about-BY-gentle.jpg      # use absolute URL, seeing it's us
 RSS: false
 # weibo_username:     
 zhihu_username:      
-github_username:      C1ovr
+github_username:      C1over
 facebook_username:  
 jianshu_username:   
 #twitter_username:   
