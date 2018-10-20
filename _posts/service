@@ -9,6 +9,7 @@ catalog: true 						# 是否归档
 tags:								#标签
     - Android
 ---
+
 ##  1、Service的生命周期
 ### onCreate（）
 * 首次创建服务时，系统将调用此方法来执行一次性设置程序（在调用 onStartCommand（）或onBind（） 之前）。如果服务已在运行，则不会调用此方法，该方法只调用一次
