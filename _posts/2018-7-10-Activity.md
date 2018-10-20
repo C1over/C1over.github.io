@@ -1,13 +1,14 @@
 ---
 layout:     post   				    
-title:    Andorid Components （1）  				 
-subtitle:  Activity        #副标题
+title:    Activity 				 
+subtitle:  Components        #副标题
 date:       2018-7-10			   	# 时间
 author:     BY 		Cc1over				# 作者
 header-img: img/post-bg-2015.jpg 	#这篇文章标题背景图片
 catalog: true 						# 是否归档
 tags:								#标签
     - Android
+    - 四大组件
 ---
 
 
