@@ -2,7 +2,7 @@
 layout:     post   				    
 title:  ActivityThread（1）				 
 subtitle:  framework   #副标题
-date:       2018-9-7			   	# 时间
+date:       2018-10-21			   	# 时间
 author:     Cc1over				# 作者
 header-img: img/post-bg-swift2.jpg 	#这篇文章标题背景图片
 catalog: true 						# 是否归档
