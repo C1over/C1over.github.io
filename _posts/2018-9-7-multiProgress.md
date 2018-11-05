@@ -626,7 +626,7 @@ interface IBinderPool {
     IBinder queryBinder(int binderCode);  //查找特定Binder的方法
 }
 ~~~
-Q:为什么需要这个接口？
+Q:为什么需要这个接口？<br>
 A:我们从上面的分析可以知道，service端并不直接提供具体的Binder，那么客户端和服务端连接的时候就应该返回一个IBinderPool对象，让客户端拿到这个IBinderPool的实例，然后由客户端决定应该用哪个Binder。所以服务端的代码很简单，只需要返回IBinderPool对象即可
 * 服务端service的代码
 ~~~
@@ -641,7 +641,7 @@ public class BinderPoolService extends Service {
     }
 }
 ~~~
-* BinderPool的具体实现
+* BinderPool的具体实现<br>
 ~~~
 public class BinderPool {
     public static final int BINDER_SPEAK = 0;
@@ -756,7 +756,6 @@ public class BinderPool {
 * 客户端
 ~~~
 public class MainActivity extends Activity {
-
     private ISpeak mSpeak;
     private ICalculate mCalculate;
     private int pid = android.os.Process.myPid();
@@ -797,6 +796,7 @@ public class MainActivity extends Activity {
 
 }
 ~~~
+<br>
 在这里也是手动的实现AIDL帮我们实现的返回代理Binder的工作，而这些操作也是必须的，因为客户端无法直接通过这个打包的Binder和服务端通信，因此客户端必须借助Proxy类来和服务端通信，这里Proxy的作用就是代理的作用，客户端所有的请求全部通过Proxy来代理。
 #### 小总结
 * （1）为每个业务模块创建AIDL接口，以及实现其接口的方法。
