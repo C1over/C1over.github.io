@@ -755,7 +755,9 @@ public class BinderPool {
 5) public static class BinderPoolImpl extends IBinderPool.Stub{} :这个类实现了IBinderPool.Stub，内部实现了IBinderPool的接口方法，这个实现类运行在服务端。内部是queryBinder()方法的实现，根据不同的Bindercode值来实例化不同的实现类，比如Speak或者Calculate，并作为Binder返回给客户端。当客户端调用这个方法的时候，实际上已经是进行了一次AIDL方式的跨进程通信。
 * 客户端
 ~~~
+
 public class MainActivity extends Activity {
+  
     private ISpeak mSpeak;
     private ICalculate mCalculate;
     private int pid = android.os.Process.myPid();
