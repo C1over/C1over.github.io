@@ -16,8 +16,8 @@ Proguard被人们熟知的是它的混淆功能，根据Proguard帮助文档的�
 * 压缩（Shrink）: 检测和删除没有使用的类，字段，方法和特性
 * 优化（Optimize） : 分析和优化Java字节码
 * 混淆（Obfuscate）: 使用简短的无意义的名称，对类，字段和方法进行重命名
-* 预检（Preveirfy）: 用来对Java class进行预验证（预验证主要是针对JME开发来说的，Android中没有预验证过程，默认是关闭）
-**补充说明：根据proguard-android-optimize.txt对optimize的描述，在Android中使用该功能是有潜在风险的，并不能保证在所有版本的Dalvik虚拟机上正常运行，该选项默认是关闭的，如果开启，请做好全面的测试。在Android项目中，我们在相应module下的build.gradle文件中会看到**
+* 预检（Preveirfy）: 用来对Java class进行预验证（预验证主要是针对JME开发来说的，Android中没有预验证过程，默认是关闭）<br>
+**补充说明：根据proguard-android-optimize.txt对optimize的描述，在Android中使用该功能是有潜在风险的，并不能保证在所有版本的Dalvik虚拟机上正常运行，该选项默认是关闭的，如果开启，请做好全面的测试。在Android项目中，我们在相应module下的build.gradle文件中会看到**<br>
 ~~~
  buildTypes {
         release {
@@ -25,46 +25,59 @@ Proguard被人们熟知的是它的混淆功能，根据Proguard帮助文档的�
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-~~~
+~~~<br>
 其中 minifyEnabled 为true是开启Proguard的功能，false是关闭。
 ### Proguard的基本规则
 ~~~
 -keep class cn.hadcn.test.**
 -keep class cn.hadcn.test.*
 ~~~
+<br>
 一颗星表示只是保持该包下的类名，而子包下的类名还是会被混淆；两颗星表示把本包和所含子包下的类名都保持；用以上方法保持类后，你会发现类名虽然未混淆，但里面的具体方法和变量命名还是变了，这时如果既想保持类名，又想保持里面的内容不被混淆，我们就需要以下方法了
+<br>
 ~~~
 -keep class cn.hadcn.test.* {*;}
 ~~~
+<br>
 在此基础上，我们也可以使用Java的基本规则来保护特定类不被混淆，比如我们可以用extend，implement等这些Java规则。如下例子就避免所有继承Activity的类被混淆
+<br>
 ~~~
 -keep public class * extends android.app.Activity
 ~~~
-如果我们要保留一个类中的内部类不被混淆则需要用$符号，如下例子表示保持ScriptFragment内部类JavaScriptInterface中的所有public内容不被混淆。、
+<br>
+如果我们要保留一个类中的内部类不被混淆则需要用$符号，如下例子表示保持ScriptFragment内部类JavaScriptInterface中的所有public内容不被混淆。
+<br>
 ~~~
 -keepclassmembers class cc.ninty.chat.ui.fragment.ScriptFragment$JavaScriptInterface {
    public *;
 }
 ~~~
+<br>
 再者，如果一个类中你不希望保持全部内容不被混淆，而只是希望保护类下的特定内容，就可以使用
+<br>
 ~~~
 <init>;     //匹配所有构造器
 <fields>;   //匹配所有域
 <methods>;  //匹配所有方法方法
 ~~~
+<br>
 你还可以在<fields>或<methods>前面加上private 、public、native等来进一步指定不被混淆的内容，如
+<br>
 ~~~
 -keep class cn.hadcn.test.One {
     public <methods>;
 }
 ~~~
+<br>
 表示One类下的所有public方法都不会被混淆，当然你还可以加入参数，比如以下表示用JSONObject作为入参的构造函数不会被混淆
+<br>
 ~~~
 -keep class cn.hadcn.test.One {
    public <init>(org.json.JSONObject);
 }
 ~~~
-有时候你是不是还想着，我不需要保持类名，我只需要把该类下的特定方法保持不被混淆就好，那你就不能用keep方法了，keep方法会保持类名，而需要用keepclassmembers ，如此类名就不会被保持，为了便于对这些规则进行理解，官网给出了以下表格
+<br>
+有时候你是不是还想着，我不需要保持类名，我只需要把该类下的特定方法保持不被混淆就好，那你就不能用keep方法了，keep方法会保持类名，而需要用keepclassmembers ，如此类名就不会被保持，为了便于对这些规则进行理解，官网给出了以下表格<br>
 | 保留       | 防止被移除或者被重命名          | 防止被重命名  |
 | ------------- |:-------------:| -----:|
 | 类和类成员      | -keep              | -keepnames|
@@ -72,6 +85,7 @@ Proguard被人们熟知的是它的混淆功能，根据Proguard帮助文档的�
 | 如果拥有某成员，保留类和类成员 | -keepclasseswithmembers     | -keepclasseswithmembernames |
 ##### 注意事项
 * 1，jni方法不可混淆，因为这个方法需要和native方法保持一致；
+<br>
 ~~~
 -keepclasseswithmembernames class * { # 保持native方法不被混淆    
     native <methods>;
@@ -82,13 +96,13 @@ Proguard被人们熟知的是它的混淆功能，根据Proguard帮助文档的�
 * 4、与服务端交互时，使用GSON、fastjson等框架解析服务端数据时，所写的JSON对象类不混淆，否则无法将JSON解析成对应的对象；
 * 5、使用第三方开源库或者引用其他第三方的SDK包时，如果有特别要求，也需要在混淆文件中加入对应的混淆规则；
 * 6、有用到WebView的JS调用也需要保证写的接口方法不混淆，原因和第一条一样；
-* 7、 Parcelable的子类和Creator静态成员变量不混淆，否则会产生Android.os.BadParcelableException异常；
+* 7、 Parcelable的子类和Creator静态成员变量不混淆，否则会产生Android.os.BadParcelableException异常；<br>
 ~~~
 -keep class * implements Android.os.Parcelable { # 保持Parcelable不被混淆           
     public static final Android.os.Parcelable$Creator *;
 }
 ~~~
-* 8、使用enum类型时需要注意避免以下两个方法混淆，因为enum类的特殊性，以下两个方法会被反射调用，见第二条规则。
+* 8、使用enum类型时需要注意避免以下两个方法混淆，因为enum类的特殊性，以下两个方法会被反射调用，见第二条规则。<br>
 ~~~
 keepclassmembers enum * {  
     public static **[] values();  
