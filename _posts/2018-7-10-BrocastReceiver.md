@@ -128,29 +128,29 @@ Manifest清单文件中为广播注册
          <action android:name="android.net.wifi.STATE_CHANGE" />            </intent-filter>
 </receiver>
 ~~~
-##  3、常见的系统广播
 
-| 系统操作                                                     | action                                  |
-| ------------------------------------------------------------ | --------------------------------------- |
-| 关闭或打开飞行模式                                           | Intent.ACTION_AIRPLANE_MODE_CHANGED     |
-| 充电时或电量发生变化                                         | Intent.ACTION_BATTERY_CHANGED           |
-| 电池电量低                                                   | Intent.ACTION_BATTERY_LOW               |
-| 电池电量充足（即从电量低变化到饱满时会发出广播               | Intent.ACTION_BATTERY_OKAY              |
-| 系统启动完成后(仅广播一次)                                   | Intent.ACTION_BOOT_COMPLETED            |
-| 检测网络变化                                                 | ConnectivityManager.CONNECTIVITY_ACTION |
-| 按下照相时的拍照按键(硬件按键)时                             | Intent.ACTION_CAMERA_BUTTON             |
-| 屏幕锁屏                                                     | Intent.ACTION_CLOSE_SYSTEM_DIALOGS      |
-| 设备当前设置被改变时(界面语言、设备方向等)                   | Intent.ACTION_CONFIGURATION_CHANGED     |
-| 插入耳机时                                                   | Intent.ACTION_HEADSET_PLUG              |
-| 未正确移除SD卡但已取出来时(正确移除方法:设置–SD卡和设备内存–卸载SD卡) | Intent.ACTION_MEDIA_BAD_REMOVAL         |
-| 插入外部储存装置（如SD卡）                                   | Intent.ACTION_MEDIA_CHECKING            |
-| 成功安装APK                                                  | Intent.ACTION_PACKAGE_ADDED             |
-| 成功删除APK                                                  | Intent.ACTION_PACKAGE_REMOVED           |
-| 重启设备                                                     | Intent.ACTION_REBOOT                    |
-| 屏幕被关闭                                                   | Intent.ACTION_SCREEN_OFF                |
-| 屏幕被打开                                                   | Intent.ACTION_SCREEN_ON                 |
-| 关闭系统时                                                   | Intent.ACTION_SHUTDOWN                  |
-| 重启设备                                                     | Intent.ACTION_REBOOT                    |
+##  3、常见的系统广播
+| 系统操作                                                            | action                                                                	  |<br>
+| ------------------------------------------------------------ | ---------------------------------------                               	|<br>
+| 关闭或打开飞行模式                                         | Intent.ACTION_AIRPLANE_MODE_CHANGED   |<br>
+| 充电时或电量发生变化                                     | Intent.ACTION_BATTERY_CHANGED              	|<br>
+| 电池电量低                                                        | Intent.ACTION_BATTERY_LOW                             |<br>
+| 电池电量充足                                                    | Intent.ACTION_BATTERY_OKAY                             |<br>
+| 系统启动完成后(仅广播一次)                           | Intent.ACTION_BOOT_COMPLETED            	|<br>
+| 检测网络变化                                                    | ConnectivityManager.CONNECTIVITY_ACTION |<br>
+| 按下照相时的拍照按键(硬件按键)时               | Intent.ACTION_CAMERA_BUTTON             	|<br>
+| 屏幕锁屏                                                            | Intent.ACTION_CLOSE_SYSTEM_DIALOGS      	|<br>
+| 设备当前设置被改变时                                     | Intent.ACTION_CONFIGURATION_CHANGED     |<br>	
+| 插入耳机时                                                         | Intent.ACTION_HEADSET_PLUG              	|<br>
+| 未正确移除SD卡但已取出来时                         | Intent.ACTION_MEDIA_BAD_REMOVAL        	 |<br>
+| 插入外部储存装置（如SD卡）                         | Intent.ACTION_MEDIA_CHECKING            	|<br>
+| 成功安装APK                                                      | Intent.ACTION_PACKAGE_ADDED             	|<br>
+| 成功删除APK                                                      | Intent.ACTION_PACKAGE_REMOVED           	|<br>
+| 重启设备                                                             | Intent.ACTION_REBOOT                    	|<br>
+| 屏幕被关闭                                                         | Intent.ACTION_SCREEN_OFF                	|<br>
+| 屏幕被打开                                                         | Intent.ACTION_SCREEN_ON                	 |<br>
+| 关闭系统时                                                         | Intent.ACTION_SHUTDOWN                 	 |<br>
+| 重启设备                                                             | Intent.ACTION_REBOOT                   	 |<br>
 ##  4、Be Careful
 #### 对不同注册方式的广播接收者回调OnReceive（Context context，Intent intent）中的context的返回值不一样
 * 对静态注册（全局+应用内广播），回调onReceive（context，intent）中的context返回值是：ReceiverRestrictedContext
