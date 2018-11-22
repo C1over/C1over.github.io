@@ -50,7 +50,7 @@ public interface OnLoginFinishedListener{
     void onSuccess();
 }
 ~~~
-###### Model层：
+**Model层：**
 ~~~
 public interface LoginModel {
     void login(String username, String password, OnLoginFinishedListener listener);
@@ -81,7 +81,7 @@ public class LoginModelImpl implements LoginModel {
     }
 }
 ~~~
-###### View层：
+**View层：**
 主要是由Activity或Fragment，一般在这里做一些加载UI视图，设置监听的操作，而有相应的操作时就调用Presenter的相应方法。
 
 ~~~
@@ -156,7 +156,7 @@ public class LoginActivity extends Activity implements LoginView, View.OnClickLi
 
 }
 ~~~
-###### Presenter层：
+**Presenter层：**
 Presenter作为一个中介者的角色，获取model层的数据之后构建view层，也可以接收到view层UI上的反馈命令，交给model层做业务操作，也可以决定view层的一些操作。
 
 ~~~
