@@ -753,7 +753,7 @@ public class BinderPool {
 2) public IBinder queryBinder(int binderCode):根据具体的binderCode值来获得某个特定的Binder，并返回。
 4) private ServiceConnection mBinderPoolConnection = new ServiceConnection(){}：在连接成功的回调中获取客户端和服务端的连接，接着，最后执行了mConnectBinderPoolCountDownLatch.countDown()方法，此时，执行bindService()的线程就会被唤醒。
 5) public static class BinderPoolImpl extends IBinderPool.Stub{} :这个类实现了IBinderPool.Stub，内部实现了IBinderPool的接口方法，这个实现类运行在服务端。内部是queryBinder()方法的实现，根据不同的Bindercode值来实例化不同的实现类，比如Speak或者Calculate，并作为Binder返回给客户端。当客户端调用这个方法的时候，实际上已经是进行了一次AIDL方式的跨进程通信。
-* 客户端
+6) 客户端
 ~~~
 
 public class MainActivity extends Activity {
@@ -798,7 +798,6 @@ public class MainActivity extends Activity {
 
 }
 ~~~
-<br>
 在这里也是手动的实现AIDL帮我们实现的返回代理Binder的工作，而这些操作也是必须的，因为客户端无法直接通过这个打包的Binder和服务端通信，因此客户端必须借助Proxy类来和服务端通信，这里Proxy的作用就是代理的作用，客户端所有的请求全部通过Proxy来代理。
 #### 小总结
 * （1）为每个业务模块创建AIDL接口，以及实现其接口的方法。
