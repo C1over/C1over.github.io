@@ -51,7 +51,7 @@ android:process部分我们提到，如果这个属性值以小写字母开头�
 #### 二、语法
 AIDL的语法十分简单，与Java语言基本保持一致，需要记住的规则有以下几点：
 
-1）AIDL文件以.aidl为后缀
+1）AIDL文件以.aidl为后缀<br>
 2）AIDL支持的数据类型分为如下几种：
 
 * 八种基本数据类型：byte、char、short、int、long、float、double、boolean、String、CharSequence
@@ -59,10 +59,11 @@ AIDL的语法十分简单，与Java语言基本保持一致，需要记住的规
 * List 类型。List承载的数据必须是AIDL支持的类型，或者是其它声明的AIDL对象
 * Map类型。Map承载的数据必须是AIDL支持的类型，或者是其它声明的AIDL对象
 
-3）AIDL文件可以分为两类。一类用来声明实现了Parcelable接口的数据类型，以供其他AIDL文件使用那些非默认支持的数据类型。还有一类是用来定义接口方法，声明要暴露哪些接口给客户端调用，定向Tag就是用来标注这些方法的参数值。
-4）定向Tag。定向Tag表示在跨进程通信中数据的流向，用于标注方法的参数值，分为in、out、inout三种。其中in表示数据只能由客户端流向服务端，out表示数据只能由服务端流向客户端，而inout则表示数据可在服务端与客户端之间双向流通。此外，如果AIDL方法接口的参数类型是：基本数据类型、String、CharSequence或者其他AIDL文件定义的方法接口，那么这些参数值得定向Tag默认是且只能是in，所以除了这些这些类型外，其他参数值都需要明确标注使用哪种定向Tag。
+3）AIDL文件可以分为两类。一类用来声明实现了Parcelable接口的数据类型，以供其他AIDL文件使用那些非默认支持的数据类型。还有一类是用来定义接口方法，声明要暴露哪些接口给客户端调用，定向Tag就是用来标注这些方法的参数值。<br>
+4）定向Tag。定向Tag表示在跨进程通信中数据的流向，用于标注方法的参数值，分为in、out、inout三种。其中in表示数据只能由客户端流向服务端，out表示数据只能由服务端流向客户端，而inout则表示数据可在服务端与客户端之间双向流通。此外，如果AIDL方法接口的参数类型是：基本数据类型、String、CharSequence或者其他AIDL文件定义的方法接口，那么这些参数值得定向Tag默认是且只能是in，所以除了这些这些类型外，其他参数值都需要明确标注使用哪种定向Tag。<br>
 5）明确导包。在AIDL文件中需要明确标明引用到的数据类型所在的包名，即使两个文件处于同个包名下
 ps:如果不明确导包AS就会出现build-tools\24.0.1\aidl.exe'' finished with non-zero exit value 1的BUG
+
 #### 三、服务端编码
 这里来实际完成一个例子作为示范，需要实现的功能是：客户端通过绑定服务端的Service的方式来调用服务端的方法，获取服务端的书籍列表并向其添加书籍，实现应用间的数据共享
 
@@ -353,11 +354,11 @@ interface BookComponent {
     void unregisterListener(IOnNewBookArrivedListener listener);
 
 }
+~~~
 服务端的操作就是添加注册和反注册的实现，然后去开启一个线程去更新信息，然后遍历观察者去通知他们信息更新。
 **注意事项：**
 1)  在IPC机制中，对象是不能夸进程直接传输的，对象跨进程传输的实质都是反序列化的过程，Binder会将传递过来的对象重新转化并生成一个新的对象，所以注册和反注册就是不一样的对象就会导致失败。所以在观察者容器中采用RemoteCallbackList<E extends IInterface> 
 2) RemoteCallbackList并不是一个List，所以它必须按照下面的方法
-~~~
 ~~~
 private RemoteCallbackList<IOnNewBookArrivedListener> mListenerList = new  RemoteCallbackList<IOnNewBookArrivedListener>();
 ~~~
@@ -760,12 +761,13 @@ public class BinderPool {
 
 }
 ~~~
-从大体上看，这个类完成的功能有实现客户端和服务端的连接，同时内有还有一个静态内部类：BinderPoolImpl，继承了IBinderPool.Stub，这个静态内部类是运行了服务端的，然后下面是关键方法的分析（前两个方法就是平常的单例模式，所以从第三个方法开始）：
-1) private synchronized void connectBinderPoolService():这个方法主要用于客户端与服务端建立连接，在方法内部出现了CountDownLatch类，这个类是用于线程同步的，由于bindService()是异步操作，所以如果要确保客户端在执行其他操作之前已经绑定好服务端，就应该先实现线程同步。
-2) public IBinder queryBinder(int binderCode):根据具体的binderCode值来获得某个特定的Binder，并返回。
-4) private ServiceConnection mBinderPoolConnection = new ServiceConnection(){}：在连接成功的回调中获取客户端和服务端的连接，接着，最后执行了mConnectBinderPoolCountDownLatch.countDown()方法，此时，执行bindService()的线程就会被唤醒。
-5) public static class BinderPoolImpl extends IBinderPool.Stub{} :这个类实现了IBinderPool.Stub，内部实现了IBinderPool的接口方法，这个实现类运行在服务端。内部是queryBinder()方法的实现，根据不同的Bindercode值来实例化不同的实现类，比如Speak或者Calculate，并作为Binder返回给客户端。当客户端调用这个方法的时候，实际上已经是进行了一次AIDL方式的跨进程通信。
+从大体上看，这个类完成的功能有实现客户端和服务端的连接，同时内有还有一个静态内部类：BinderPoolImpl，继承了IBinderPool.Stub，这个静态内部类是运行了服务端的，然后下面是关键方法的分析（前两个方法就是平常的单例模式，所以从第三个方法开始）：<br>
+1) private synchronized void connectBinderPoolService():这个方法主要用于客户端与服务端建立连接，在方法内部出现了CountDownLatch类，这个类是用于线程同步的，由于bindService()是异步操作，所以如果要确保客户端在执行其他操作之前已经绑定好服务端，就应该先实现线程同步。<br>
+2) public IBinder queryBinder(int binderCode):根据具体的binderCode值来获得某个特定的Binder，并返回。<br>
+4) private ServiceConnection mBinderPoolConnection = new ServiceConnection(){}：在连接成功的回调中获取客户端和服务端的连接，接着，最后执行了mConnectBinderPoolCountDownLatch.countDown()方法，此时，执行bindService()的线程就会被唤醒。<br>
+5) public static class BinderPoolImpl extends IBinderPool.Stub{} :这个类实现了IBinderPool.Stub，内部实现了IBinderPool的接口方法，这个实现类运行在服务端。内部是queryBinder()方法的实现，根据不同的Bindercode值来实例化不同的实现类，比如Speak或者Calculate，并作为Binder返回给客户端。当客户端调用这个方法的时候，实际上已经是进行了一次AIDL方式的跨进程通信。<br>
 6) 客户端
+
 ~~~
 
 public class MainActivity extends Activity {
