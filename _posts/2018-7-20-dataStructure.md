@@ -115,7 +115,8 @@ d.程序对于一切合法的输入数据都能产生满足规格说明要求的
   3) 除最后元素外，其他数据元素均有唯一的直接后继
   4) 除第一个元素外，其他元素仅有唯一的直接前驱
 #### 线性表的两种表示形式
-* 顺序表示（其实就是数组）
+顺序表示（其实就是数组）
+
 ~~~
 define maxsize 
 typedef struct {
@@ -123,7 +124,8 @@ typedef struct {
     int last; // 记录线性表中最后一个元素在数组elem[]中的位置（下标值），空表置为-1
 } SeqList
 ~~~
-* 链表表示
+链表表示
+
 #### 线性表的基本操作
 ~~~
 线性表的操作包括如下几种
@@ -154,7 +156,8 @@ typedef struct {
  （13）print(L)
        //打印线性表    
 ~~~
-* Merge 
+Merge 
+
 ~~~
   void Merge(SeqList *LA,SeqList *LB,SeqList *LC){
       int i=0,j=0,k=0;
@@ -179,7 +182,8 @@ typedef struct {
   } 
 ~~~
 #### 一元稀疏多项式
-* 类型定义
+类型定义
+
 ~~~
 typedef struct{
     float coef； // 系数
@@ -190,7 +194,8 @@ typedef struct{
     int length；  // 长度（项数）
 }Poly  /// 一元稀疏多项式
 ~~~
-* 构建一元稀疏多项式
+构建一元稀疏多项式
+
 ~~~
 Status CreatePoly(Poly &p,Term e[],int n){
     int i;
@@ -205,7 +210,8 @@ Status CreatePoly(Poly &p,Term e[],int n){
     return OK;
 }
 ~~~
-* 一元稀疏多项式的加法
+一元稀疏多项式的加法
+
 ~~~
 Status AddPoly(Poly pa,Poly pb,Poly &pc){
     // 求pc=pa+pb
