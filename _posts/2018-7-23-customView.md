@@ -19,10 +19,11 @@ tags:								#标签
 * onTouchEvent
 * onInterceTouchEvent(ViewGroup)
 ### 1）自定义属性声明与获取
-1、分析需要的自定义属性<br>
-2、在res/values/attrs.xml定义声明<br>
-3、在layout xml文件中进行使用<br>
-4、在view的构造方法中进行获取
+1) 分析需要的自定义属性<br>
+2) 在res/values/attrs.xml定义声明<br>
+3) 在layout xml文件中进行使用<br>
+4) 在view的构造方法中进行获取
+
 ~~~
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
@@ -53,10 +54,11 @@ tags:								#标签
     }
 ~~~
 ### 2）测量onMeasure
-1、EXACTLY，AT_MOST，UNSPECIFIED<br>
-2、MeasureSpec<br>
-3、setMeasuredDimension<br>
-4、requestLayout（）
+1) EXACTLY，AT_MOST，UNSPECIFIED<br>
+2) MeasureSpec<br>
+3) setMeasuredDimension<br>
+4) requestLayout（）
+
 ~~~
 private int measureHeight(int heightMeasureSpec) {
         int result = 0;
@@ -74,9 +76,10 @@ private int measureHeight(int heightMeasureSpec) {
     }
 ~~~
 ### 3）布局onLayout（ViewGroup）
-1、决定子view的位置<br>
-2、尽可能将onMeasure中的一些操作移动到此方法中<br>
-3、requestLayout（）
+1) 决定子view的位置<br>
+2) 尽可能将onMeasure中的一些操作移动到此方法中<br>
+3) requestLayout（）
+
 ~~~
  private void onLayout(boolean change,int l,int t,int r,int b){
          final int childCount = getChildCount();
@@ -92,24 +95,26 @@ private int measureHeight(int heightMeasureSpec) {
     }
 ~~~
 ### 4）绘制onDraw
-1、绘制内容区域<br>
-2、invalidate（），postInvalidate（）<br>
-3、Canvas.drewXXX<br>
-4、translate、rotate、scale、skew<br>
-5、save（）、restore（）
+1) 绘制内容区域<br>
+2) invalidate（），postInvalidate（）<br>
+3) Canvas.drewXXX<br>
+4) translate、rotate、scale、skew<br>
+5) save（）、restore（）
+
 ~~~
  protected synchoronized void onDraw(Canvas canvas){
      // 使用canvas相关API绘制anything you want
  }
 ~~~
 ### 5）onTouchEvent
-1、ACTION_DOWN<br>
-     ACTION_MOVE<br>
-     ACTION_UP<br>
-2、ACTION_POINTER_DOWN、<br>
-      ACTION_POINTER_UP<br>
-3、parent.requestDisallowIntercepetTouchEvent(true);<br>
-4、VelocityTracker
+1) ACTION_DOWN、
+  ACTION_MOVE、
+  ACTION_UP<br>
+2) ACTION_POINTER_DOWN、
+  ACTION_POINTER_UP<br>
+3) parent.requestDisallowIntercepetTouchEvent(true);<br>
+4) VelocityTracker
+
 ~~~
 public boolean onTouchEvent(MotionEvent ev) {
         initVelocityTrackerIfNotExists();
@@ -152,12 +157,12 @@ public boolean onTouchEvent(MotionEvent ev) {
 
 ~~~
 ### 6）onInterceptTouchEvent
-1）ACTION_DOWN、<br>
-   ACTION_MOVE、<br>
+1）ACTION_DOWN、
+   ACTION_MOVE、
    ACTION_UP<br>
 2）ACTION_POINTER_DOWN、
   ACTION_POINTER_UP
-3、决定是否拦截该手势
+3）决定是否拦截该手势
 ~~~
   @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
