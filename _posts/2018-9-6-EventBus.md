@@ -29,7 +29,6 @@ public class MessageEvent {
  }
 ```
 * 注册
-与Android的广播机制类似，这个过程需要在activity中注册evetbus事件，然后定义接收方法
 ```java
 @Override
 protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +43,7 @@ protected void onDestroy() {
     super.onDestroy();
     EventBus.getDefault().unregister(this);
 }
+// 与Android的广播机制类似，这个过程需要在activity中注册evetbus事件，然后定义接收方法
 ```
 * 产生事件，即发送消息
 ```java
