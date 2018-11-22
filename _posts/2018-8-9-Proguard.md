@@ -46,13 +46,11 @@ Proguard被人们熟知的是它的混淆功能，根据Proguard帮助文档的�
    public *;
 }
 ~~~
-再者，如果一个类中你不希望保持全部内容不被混淆，而只是希望保护类下的特定内容，就可以使用
-~~~
-<init>;     //匹配所有构造器
-<fields>;   //匹配所有域
-<methods>;  //匹配所有方法方法
-~~~
-你还可以在<fields>或<methods>前面加上private 、public、native等来进一步指定不被混淆的内容，如
+再者，如果一个类中你不希望保持全部内容不被混淆，而只是希望保护类下的特定内容，就可以使用(以下字段要加尖括号)
+init;    //匹配所有构造器<br>
+fields;   //匹配所有域<br>
+methods;  //匹配所有方法方法<br>
+你还可以在fields或methods前面加上private 、public、native等来进一步指定不被混淆的内容，如
 ~~~
 -keep class cn.hadcn.test.One {
     public <methods>;
