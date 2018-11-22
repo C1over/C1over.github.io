@@ -46,7 +46,7 @@ Proguard被人们熟知的是它的混淆功能，根据Proguard帮助文档的�
    public *;
 }
 ~~~
-再者，如果一个类中你不希望保持全部内容不被混淆，而只是希望保护类下的特定内容，就可以使用(以下字段要加尖括号)
+再者，如果一个类中你不希望保持全部内容不被混淆，而只是希望保护类下的特定内容，就可以使用(以下字段都是xml标签)
 init;    //匹配所有构造器<br>
 fields;   //匹配所有域<br>
 methods;  //匹配所有方法方法<br>
@@ -65,11 +65,11 @@ methods;  //匹配所有方法方法<br>
 <br>
 有时候你是不是还想着，我不需要保持类名，我只需要把该类下的特定方法保持不被混淆就好，那你就不能用keep方法了，keep方法会保持类名，而需要用keepclassmembers ，如此类名就不会被保持，为了便于对这些规则进行理解，官网给出了以下规则<br>
 
-1）类和类成员，防止被移除或者被重命名-keep，防止被重命名-keepnames<br>
+* 类和类成员，防止被移除或者被重命名-keep，防止被重命名-keepnames
 
-2）仅类成员，防止被移除或者被重命名-keepclassmembers，防止被重命名-keepclassmembernames<br>
+* 仅类成员，防止被移除或者被重命名-keepclassmembers，防止被重命名-keepclassmembernames
 
-3）如果拥有某成员、保留类和类成员，防止被移除或者被重命名-keepclasseswithmembers，防止被重命名-keepclasseswithmembernames<br>
+* 如果拥有某成员、保留类和类成员，防止被移除或者被重命名-keepclasseswithmembers，防止被重命名-keepclasseswithmembernames
 
 **注意事项**<br>
 1）jni方法不可混淆，因为这个方法需要和native方法保持一致
