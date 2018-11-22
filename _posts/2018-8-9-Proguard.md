@@ -46,11 +46,12 @@ Proguard被人们熟知的是它的混淆功能，根据Proguard帮助文档的�
    public *;
 }
 ~~~
-再者，如果一个类中你不希望保持全部内容不被混淆，而只是希望保护类下的特定内容，就可以使用(以下字段都是xml标签)
+再者，如果一个类中你不希望保持全部内容不被混淆，而只是希望保护类下的特定内容，就可以使用(以下字段都是xml标签)<br>
 init;    //匹配所有构造器<br>
 fields;   //匹配所有域<br>
 methods;  //匹配所有方法方法<br>
 你还可以在fields或methods前面加上private 、public、native等来进一步指定不被混淆的内容，如
+
 ~~~
 -keep class cn.hadcn.test.One {
     public <methods>;
@@ -62,7 +63,6 @@ methods;  //匹配所有方法方法<br>
    public <init>(org.json.JSONObject);
 }
 ~~~
-<br>
 有时候你是不是还想着，我不需要保持类名，我只需要把该类下的特定方法保持不被混淆就好，那你就不能用keep方法了，keep方法会保持类名，而需要用keepclassmembers ，如此类名就不会被保持，为了便于对这些规则进行理解，官网给出了以下规则<br>
 
 * 类和类成员，防止被移除或者被重命名-keep，防止被重命名-keepnames
@@ -75,7 +75,8 @@ methods;  //匹配所有方法方法<br>
 1）jni方法不可混淆，因为这个方法需要和native方法保持一致
 
 ~~~
--keepclasseswithmembernames class * { # 保持native方法不被混淆    
+-keepclasseswithmembernames class * { 
+  # 保持native方法不被混淆    
     native <methods>;
 }
 ~~~
@@ -85,6 +86,7 @@ methods;  //匹配所有方法方法<br>
 5）使用第三方开源库或者引用其他第三方的SDK包时，如果有特别要求，也需要在混淆文件中加入对应的混淆规则；<br>
 6）有用到WebView的JS调用也需要保证写的接口方法不混淆，原因和第一条一样；<br>
 7） Parcelable的子类和Creator静态成员变量不混淆，否则会产生Android.os.BadParcelableException异常；<br>
+
 ~~~
 -keep class * implements Android.os.Parcelable { # 保持Parcelable不被混淆           
     public static final Android.os.Parcelable$Creator *;

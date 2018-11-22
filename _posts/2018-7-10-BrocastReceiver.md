@@ -78,7 +78,8 @@ tags:								#标签
      }
 }
 ~~~
-* **注意事项：** 1）因为当优先级更高的应用需要内存的时候，activity在执行完onPause方法以后就会被销毁（即onStop（），onDestroy（）方法不会执行），所以动态注册最好在onResunm（）方法注册，onPause（）方法注销，以免在内存不足的时候会造成内存泄漏。
+**注意事项：** 1）因为当优先级更高的应用需要内存的时候，activity在执行完onPause方法以后就会被销毁（即onStop（），onDestroy（）方法不会执行），所以动态注册最好在onResunm（）方法注册，onPause（）方法注销，以免在内存不足的时候会造成内存泄漏。<br>
+
 ## 2、BrocastReceiver的使用场景
 1）App全局监听，这种主要用于在AndroidManifest中静态注册的广播接收器，一般我们在收到该消息后，需要做一些相应的动作，而这些动作与当前App的组件，比如Activity或者Service的是否运行无关，比如我们在集成第三方Push SDK时，一般都会添加一个静态注册的BroadcastReceiver来监听Push消息，当有Push消息过来时，会在后台做一些网络请求或者发送通知等等。
 
