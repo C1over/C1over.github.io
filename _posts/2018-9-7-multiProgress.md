@@ -353,12 +353,11 @@ interface BookComponent {
     void unregisterListener(IOnNewBookArrivedListener listener);
 
 }
-~~~
-* 服务端
 服务端的操作就是添加注册和反注册的实现，然后去开启一个线程去更新信息，然后遍历观察者去通知他们信息更新。
 **注意事项：**
 1)  在IPC机制中，对象是不能夸进程直接传输的，对象跨进程传输的实质都是反序列化的过程，Binder会将传递过来的对象重新转化并生成一个新的对象，所以注册和反注册就是不一样的对象就会导致失败。所以在观察者容器中采用RemoteCallbackList<E extends IInterface> 
 2) RemoteCallbackList并不是一个List，所以它必须按照下面的方法
+~~~
 ~~~
 private RemoteCallbackList<IOnNewBookArrivedListener> mListenerList = new  RemoteCallbackList<IOnNewBookArrivedListener>();
 ~~~
@@ -393,14 +392,16 @@ private void onNewBookArrived(Book book) throws RemoteException {
      }
   }
 ~~~
-* 客户端
+客户端
 **注意事项：**调用远程服务方法的时候，调用方法会运行在服务端的Binder线程池中，同时客户端线程会被挂起，如果服务端方法执行比较耗时的话就会
+
 ~~~
     omission
 ~~~
 #### AIDL原理
 在generated目录下，根据我们写的aidl文件BookComponent.aidl，系统会为我们生成一个BookComponent.java这个类，它继承了Iinterface这个接口（ps：所有可以在Binder中传输的接口都需要继承IInterface接口，接下来分析里面的关键方法以及关键的内部类以及属性。
-* DESCRIPTOR
+DESCRIPTOR
+
 ~~~
 public static abstract class Stub extends android.os.Binder
             implements com.hebaiyi.www.cc1overtest.BookComponent {
@@ -408,7 +409,8 @@ public static abstract class Stub extends android.os.Binder
 
 ~~~
 这是静态内部类Stub中的一个静态常量，可见Stub这个类就是继承自Binder类，而DESCRIPTOR则是Binder的唯一标识，一般用当前Binder的类型来标识。
-* asInterface（android.os.IBinder obj）
+asInterface（android.os.IBinder obj）
+
 ~~~
  public static com.hebaiyi.www.cc1overtest.BookComponent asInterface(android.os.IBinder obj) {
             if ((obj == null)) {
@@ -422,9 +424,11 @@ public static abstract class Stub extends android.os.Binder
         }
 ~~~
 这个方法用于将服务端的Binder对象转换成客户端所需的AIDL接口类型的对象，而这种转换是区分进程的，如果客户端和服务端位于同一进程，那么此方法返回的就是服务端的Stub对象本身，否则返回的是系统封装后的Stub.proxy对象。
-* asBinder
+asBinder<br>
 这个方法用于返回当前Binder对象
-* onTransact
+
+onTransact
+
 ~~~
  @Override
         public boolean onTransact(int code,
@@ -509,7 +513,8 @@ public boolean onTransact(int code, android.os.Parcel data, android.os.Parcel re
         return mBinder;
     }
 ~~~
-* Proxy#getBoookList
+Proxy#getBoookList
+
 ~~~
  @Override
             public java.util.List<com.hebaiyi.www.cc1overtest.Book>
@@ -534,10 +539,13 @@ public boolean onTransact(int code, android.os.Parcel data, android.os.Parcel re
 ps：由于当客户端发起远程请求的时候，当前线程会被挂起直至服务端进程返回数据，所以远程方法是很耗时的，而由于服务端Binder方法是运行在Binder的线程池中，所以不管是否耗时都应该采用同比方法去实现。而AIDL的作用是方便系统为我们生产固定格式的java文件，它的本质是系统为我们提供的一种快速实现Binder的工具。
 
 补充：关于Binder的两个很重要的方法linkToDeath和unlinkToDeath，由于Binder运行在服务端进程，如果服务端进程异常终止，就会导致Binder连接断裂，会导致远程调用失败，更关键的是，如果不知道Binder连接断裂，那客户端的功能也会受到影响。To解决这个问题，Binder中提供了两个配对的方法linkToDeath和unlinkToDeath，通过linkToDeath设置了一个死亡代理，当Binder死亡时，我们就会收到通知，这个时候我们就可以重新发起连接请求从而恢复连接，以下是给Binder设置死亡代理的步骤；
-*  声明一个DeathRecipient对象
-DeathRecipient是一个借口，其内部只有一个binderDied，我们需要实现这个方法，当Binder死亡的时候，系统就会回调binderDied方法，然后我们就可以移出之前绑定的binder代理并重新绑定远程服务；
-* 在客户端设置远程服务成功之后，给Binder设置死亡代理
-* Binder的isBinderAlive方法也可以判断Binder是否死亡
+1) 声明一个DeathRecipient对象
+DeathRecipient是一个借口，其内部只有一个binderDied，我们需要实现这个方法，当Binder死亡的时候，系统就会回调binderDied方法，然后我们就可以移出之前绑定的binder代理并重新绑定远程服务<br>
+
+2) 在客户端设置远程服务成功之后，给Binder设置死亡代理<br>
+
+3) Binder的isBinderAlive方法也可以判断Binder是否死亡
+
 ~~~
   private IBinder.DeathRecipient mDeathRecipient = new IBinder.DeathRecipient() {
         @Override
@@ -585,7 +593,8 @@ private IBinder.DeathRecipient mDeathRecipient = new IBinder.DeathRecipient() {
 ### Binder连接池
 Binder连接池是用来管理所有Binder，而服务端只需要管理这个Binder连接池即可，通过这样的方式实现一个service管理多个Binder，为不同的模块返回不同的Binder，以此解决多模块远程连接时service随着AIDL接口快速膨胀的尴尬情况
 以下参照《Android 开发艺术探索》一书，给出一个Binder连接池的案例：
-* 先提供两个AIDL接口来模拟多个模块都要使用AIDL的情况：
+先提供两个AIDL接口来模拟多个模块都要使用AIDL的情况：
+
 ~~~
 interface ISpeak {
     void speak();
@@ -620,7 +629,8 @@ public class Calculate extends ICalculate.Stub {
 }
 ~~~
 可以看见，这两个接口的实现类，都是继承了Interface.Stub类，在上面AIDL的代码中也出现了类似的代码，而这里我们把实现了接口的方法从服务端抽离出来了，其实这个实现类依然是运行在服务端的进程中，从而实现了AIDL接口和服务端的解耦合工作，让服务端不再直接参与AIDL接口方法的实现工作，这样当模块多起来之后，service中的代码就不会显得过于臃肿。而服务端就根据Binder连接池与AIDL接口联系，客户端需要什么Binder，就提供信息给Binder连接池，而连接池根据相应信息返回正确的Binder，这样客户端就能执行特定的操作了。可以说，Binder连接池的思路，非常类似设计模式之中的工厂模式。
-* 为Binder连接池创建AIDL接口：IBinderPool.aidl:
+为Binder连接池创建AIDL接口：IBinderPool.aidl:
+
 ~~~
 interface IBinderPool {
     IBinder queryBinder(int binderCode);  //查找特定Binder的方法
@@ -628,7 +638,8 @@ interface IBinderPool {
 ~~~
 Q:为什么需要这个接口？<br>
 A:我们从上面的分析可以知道，service端并不直接提供具体的Binder，那么客户端和服务端连接的时候就应该返回一个IBinderPool对象，让客户端拿到这个IBinderPool的实例，然后由客户端决定应该用哪个Binder。所以服务端的代码很简单，只需要返回IBinderPool对象即可
-* 服务端service的代码
+服务端service的代码
+
 ~~~
 public class BinderPoolService extends Service {
 
@@ -641,7 +652,8 @@ public class BinderPoolService extends Service {
     }
 }
 ~~~
-* BinderPool的具体实现<br>
+BinderPool的具体实现<br>
+
 ~~~
 public class BinderPool {
     public static final int BINDER_SPEAK = 0;
