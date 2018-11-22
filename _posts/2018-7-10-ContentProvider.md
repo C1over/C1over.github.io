@@ -39,8 +39,8 @@ tags:								#标签
     1）这是一个在 content provider 中帮助匹配  URIs 的实用类。
     2）public void addURI (String authority, String path, int code)这个方法是用来表示在  content provider 里面添加外部对其的匹配的规则，当 URI 被匹配的时  候，就会返回  code 码， URI节点可以精确的匹配字符串， "*" 号匹配任何的字符串 "#" 号只能匹配数字。[比如删除一条记录中 ID 往往是数字]<br>
  * 参数说明：
-    1）authority : 授权, 就是 AndroidMainifest.xml 中的授权
-    2）path : 匹配路径(通常是一个表名)[* 可以作为匹配任意字符的通配符, # 可以作为匹配数字的通配符]。【注意这里如果是单条记录，需要添加 /# 标示符】
+    1）authority : 授权, 就是 AndroidMainifest.xml 中的授权<br>
+    2）path : 匹配路径(通常是一个表名)[* 可以作为匹配任意字符的通配符, # 可以作为匹配数字的通配符]。【注意这里如果是单条记录，需要添加 /# 标示符】<br>
 ~~~
  private static final UriMatcher URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);  
     private static final int STUDENT = 1; // 操作单条记录  
