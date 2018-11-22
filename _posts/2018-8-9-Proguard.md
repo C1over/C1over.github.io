@@ -65,14 +65,17 @@ Proguard被人们熟知的是它的混淆功能，根据Proguard帮助文档的�
 }
 ~~~
 <br>
-有时候你是不是还想着，我不需要保持类名，我只需要把该类下的特定方法保持不被混淆就好，那你就不能用keep方法了，keep方法会保持类名，而需要用keepclassmembers ，如此类名就不会被保持，为了便于对这些规则进行理解，官网给出了以下表格<br>
-| 保留       | 防止被移除或者被重命名          | 防止被重命名  |
-| ------------- |:-------------:| -----:|
-| 类和类成员      | -keep              | -keepnames|
-| 仅类成员        | -keepclassmembers |  	-keepclassmembernames|
-| 如果拥有某成员，保留类和类成员 | -keepclasseswithmembers     | -keepclasseswithmembernames |<br>
-##### 注意事项
+有时候你是不是还想着，我不需要保持类名，我只需要把该类下的特定方法保持不被混淆就好，那你就不能用keep方法了，keep方法会保持类名，而需要用keepclassmembers ，如此类名就不会被保持，为了便于对这些规则进行理解，官网给出了以下规则<br>
+
+1）类和类成员，防止被移除或者被重命名-keep，防止被重命名-keepnames<br>
+
+2）仅类成员，防止被移除或者被重命名-keepclassmembers，防止被重命名-keepclassmembernames<br>
+
+3）如果拥有某成员、保留类和类成员，防止被移除或者被重命名-keepclasseswithmembers，防止被重命名-keepclasseswithmembernames<br>
+
+**注意事项**<br>
 1）jni方法不可混淆，因为这个方法需要和native方法保持一致
+
 ~~~
 -keepclasseswithmembernames class * { # 保持native方法不被混淆    
     native <methods>;
