@@ -27,9 +27,12 @@ tags:								#标签
         
     }
 ~~~
-*  firstVisibleItem：当前能看见的第一Item的ID（从0开始）
-*  visibleItemCount：当前能看见的Item总数
-*  totalItemCount：整个ListView的Item总数
+firstVisibleItem：当前能看见的第一Item的ID（从0开始）
+
+visibleItemCount：当前能看见的Item总数
+
+totalItemCount：整个ListView的Item总数
+
 ~~~
    if(firstVisibleItem+visibleItemCount==totalItemCount){
       // 滑动到最后一行   
@@ -70,22 +73,27 @@ tags:								#标签
             }
         };
 ~~~
-* 通过了滑动点的坐标改变大小，判断移动方向。
+通过了滑动点的坐标改变大小，判断移动方向。
 **initAbsListView内设置ListView本身可以点击即可以消耗父View分发的事件： setClickable(true); **
+
 ###### 局部刷新ListView
-* **实现原理：**<br> 1）找到需要更新的item在adapter中的位置<br> 2）更新adapter中item的数据data<br> 3）如果该item在listView当前屏的可见范围内则更新内容，否则不需要更新，待下次adapter刷新全部时再刷新
-* 方案一：获取itemView里面的控件直接设置
+**实现原理：**<br> 1）找到需要更新的item在adapter中的位置<br> 2）更新adapter中item的数据data<br> 3）如果该item在listView当前屏的可见范围内则更新内容，否则不需要更新，待下次adapter刷新全部时再刷新
+
+方案一：获取itemView里面的控件直接设置
+
 ~~~
 View view = mListView.getChildAt(targetIndex - startShownIndex);
 TextView textView = (TextView) view.findViewById(R.id.textView);
 textView.setText(datas.get(targetIndex));
 ~~~
-*  方案二：获取itemView然后调用getView方法
+方案二：获取itemView然后调用getView方法
+
 ~~~
 View view = mListView.getChildAt(targetIndex - startShownIndex);         
 myAdapter.getView(targetIndex, view, mListView);//核心方法
 ~~~
-* 方案三：通过CommonAdapter和CommondViewHolder实现上面的操作
+方案三：通过CommonAdapter和CommondViewHolder实现上面的操作
+
 ~~~
 private void updateOneTest() {
         setContentView(R.layout.activity_main);
@@ -134,7 +142,8 @@ private void updateSingle(int position) {
     }
 ~~~
 ###### RecycleBin机制
-* 节选自部分的源码
+节选自部分的源码
+
 ~~~
 
 /**

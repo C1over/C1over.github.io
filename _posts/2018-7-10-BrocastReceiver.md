@@ -17,9 +17,10 @@ tags:								#标签
 * 必须复写抽象方法onReceive()方法
 * **注意事项**：默认情况下，广播接收器运行在 UI 线程，因此，onReceive（）方法不能执行耗时操作，否则将导致ANR。
 ###  2） 注册广播
-####  **静态注册**
-* 注册方式：在AndroidManifest.xml里通过<receive>标签声明
+####  静态注册
+注册方式：在AndroidManifest.xml里通过<receive>标签声明
 属性说明：<br>
+
 ~~~
 <receiver 
     android:enabled=["true" | "false"]
@@ -45,8 +46,9 @@ tags:								#标签
 </receiver>
 ~~~
 #### **动态注册**
-* 注册方式：在代码中调用Context.registerReceiver（）方法
+注册方式：在代码中调用Context.registerReceiver（）方法
 示例代码：
+
 ~~~
 // 选择在Activity生命周期方法中的onResume()中注册
 @Override
@@ -78,8 +80,10 @@ tags:								#标签
 ~~~
 * **注意事项：** 1）因为当优先级更高的应用需要内存的时候，activity在执行完onPause方法以后就会被销毁（即onStop（），onDestroy（）方法不会执行），所以动态注册最好在onResunm（）方法注册，onPause（）方法注销，以免在内存不足的时候会造成内存泄漏。
 ## 2、BrocastReceiver的使用场景
-* 1）App全局监听，这种主要用于在AndroidManifest中静态注册的广播接收器，一般我们在收到该消息后，需要做一些相应的动作，而这些动作与当前App的组件，比如Activity或者Service的是否运行无关，比如我们在集成第三方Push SDK时，一般都会添加一个静态注册的BroadcastReceiver来监听Push消息，当有Push消息过来时，会在后台做一些网络请求或者发送通知等等。
-* 2）组件局部监听，这种主要是在Activity或者Service中使用registerReceiver（）动态注册的广播接收器，因为当我们收到一些特定的消息，比如网络连接发生变化时，我们可能需要在当前Activity页面给用户一些UI上的提示，或者将Service中的网络请求任务暂停。所以这种动态注册的广播接收器适合特定组件的特定消息处理。
+1）App全局监听，这种主要用于在AndroidManifest中静态注册的广播接收器，一般我们在收到该消息后，需要做一些相应的动作，而这些动作与当前App的组件，比如Activity或者Service的是否运行无关，比如我们在集成第三方Push SDK时，一般都会添加一个静态注册的BroadcastReceiver来监听Push消息，当有Push消息过来时，会在后台做一些网络请求或者发送通知等等。
+
+2）组件局部监听，这种主要是在Activity或者Service中使用registerReceiver（）动态注册的广播接收器，因为当我们收到一些特定的消息，比如网络连接发生变化时，我们可能需要在当前Activity页面给用户一些UI上的提示，或者将Service中的网络请求任务暂停。所以这种动态注册的广播接收器适合特定组件的特定消息处理。
+
 ~~~
   /**
    * 只有当网络改变的时候才会 经过广播。
@@ -114,7 +118,8 @@ tags:								#标签
   		}
   	}
 ~~~
-* Manifest清单文件中为广播注册
+Manifest清单文件中为广播注册
+
 ~~~
 <receiver android:name=".NetBroadCastReciver>
    <intent-filter>
