@@ -19,18 +19,18 @@ EventBus事件主线由四大部分组成：
 4) EventBus：类似于中转站，将我们的事件进行对应的分发处理
 ### EventBus的基本使用
 * 添加依赖
-~~~
+```java
      implementation 'de.greenrobot:eventbus:3.0.0-beta1'
-~~~
+```
 * 定义一个消息类，该类可以不继承任何基类也不需要实现任何接口
-~~~
+```java
 public class MessageEvent {
  ......
  }
-~~~
+```
 * 注册
 与Android的广播机制类似，这个过程需要在activity中注册evetbus事件，然后定义接收方法
-~~~
+```java
 @Override
 protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -44,19 +44,19 @@ protected void onDestroy() {
     super.onDestroy();
     EventBus.getDefault().unregister(this);
 }
-~~~
+```
 * 产生事件，即发送消息
-~~~
+```java
 EventBus.getDefault().post(messageEvent);
-~~~
+```
 * 处理消息
 在3.0之前，EventBus还没有使用注解方式。消息处理的方法也只能限定于onEvent、onEventMainThread、onEventBackgroundThread和onEventAsync，分别代表四种线程模型。而在3.0之后，消息处理的方法可以随便取名，但是需要添加一个注解@Subscribe，并且要指定线程模型（默认为POSTING），四种线程模型，下面会讲到。
-~~~
+```java
 @Subscribe(threadMode = ThreadMode.POSTING)
 public void XXX(MessageEvent messageEvent){
     ... 
 }
-~~~
+```
 ### 线程模型
 > 在EventBus的事件处理函数中需要指定线程模型，即指定事件处理函数运行所在的想线程。在上面我们已经接触到了EventBus的四种线程模型。那他们有什么区别呢？ 在EventBus中的观察者通常有四种线程模型，分别是PostThread（默认）、MainThread、BackgroundThread与Async。
 
