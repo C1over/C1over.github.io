@@ -12,11 +12,11 @@ tags:								#标签
 ---
 ## EventBus
 ![](https://upload-images.jianshu.io/upload_images/1797490-88b4a064b9723ef6.png)
-EventBus事件主线由四大部分组成：
-1) Publisher发布者：用于分发我呢吧的Event事件，在EventBus中通过post方法进行分发传送
-2) Subscriber订阅者：用于接收我们的事件，我们在订阅事件中处理我们接收的数据
-3) Event事件：任何一个对象都可以作为事件，比如任何字符串，事件是发布者和订阅者之间的通信载体
-4) EventBus：类似于中转站，将我们的事件进行对应的分发处理
+EventBus事件主线由四大部分组成：<br>
+1) Publisher发布者：用于分发我呢吧的Event事件，在EventBus中通过post方法进行分发传送<br>
+2) Subscriber订阅者：用于接收我们的事件，我们在订阅事件中处理我们接收的数据<br>
+3) Event事件：任何一个对象都可以作为事件，比如任何字符串，事件是发布者和订阅者之间的通信载体<br>
+4) EventBus：类似于中转站，将我们的事件进行对应的分发处理<br>
 ### EventBus的基本使用
 1）添加依赖
 ```java
