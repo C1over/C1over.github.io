@@ -327,7 +327,7 @@ class RecycleBin {
 * getScrapView 用于从废弃缓存中取出一个View，这些废弃缓存中的View是没有顺序可言的，因此getScrapView()方法中的算法也非常简单，就是直接从mCurrentScrap当中获取尾部的一个scrap view进行返回。
 * 上面也提到了Adapter当中可以重写一个getViewTypeCount()来表示ListView中有几种类型的数据项，而setViewTypeCount()方法的作用就是为每种类型的数据项都单独启用一个RecycleBin缓存机制。
 
-###### 目前对ListView源码的理解
+#### 目前对ListView源码的理解
 * ListView也是一种View，它的工作原理自然离不开measure，layout，draw这三个流程，而且其实View显示在界面上至少会经过2次measure和layout的过程，所以其实在ListView中也会有这个流程，所以下面就来总结一下两次测量的差异：
 * **第一次测量：**<br>
 第一次测量的时候ListView中没有子View。<br>
