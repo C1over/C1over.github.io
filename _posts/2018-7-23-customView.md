@@ -18,6 +18,8 @@ tags:								#标签
 * 绘制onDraw
 * onTouchEvent
 * onInterceTouchEvent(ViewGroup)
+
+
 ### 1）自定义属性声明与获取
 1) 分析需要的自定义属性<br>
 2) 在res/values/attrs.xml定义声明<br>
@@ -53,6 +55,8 @@ tags:								#标签
         typedArray.recycle();
     }
 ~~~
+
+
 ### 2）测量onMeasure
 1) EXACTLY，AT_MOST，UNSPECIFIED<br>
 2) MeasureSpec<br>
@@ -75,6 +79,8 @@ private int measureHeight(int heightMeasureSpec) {
         return result;
     }
 ~~~
+
+
 ### 3）布局onLayout（ViewGroup）
 1) 决定子view的位置<br>
 2) 尽可能将onMeasure中的一些操作移动到此方法中<br>
@@ -106,6 +112,8 @@ private int measureHeight(int heightMeasureSpec) {
      // 使用canvas相关API绘制anything you want
  }
 ~~~
+
+
 ### 5）onTouchEvent
 1) ACTION_DOWN、
   ACTION_MOVE、
@@ -156,6 +164,8 @@ public boolean onTouchEvent(MotionEvent ev) {
     }
 
 ~~~
+
+
 ### 6）onInterceptTouchEvent
 1）ACTION_DOWN、
    ACTION_MOVE、
