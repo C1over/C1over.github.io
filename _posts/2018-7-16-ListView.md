@@ -13,11 +13,12 @@ tags:								#标签
 
 
 ## ListView常用技巧
-###### 处理空ListView
+
+####处理空ListView
 ~~~
    listView.setEmptyView（View）；
 ~~~
-###### 监听ListView滑动
+####监听ListView滑动
 ~~~
     public void onScrollStateChanged(AbsListView view, int scrollState){
         
@@ -76,7 +77,7 @@ totalItemCount：整个ListView的Item总数
 通过了滑动点的坐标改变大小，判断移动方向。
 **initAbsListView内设置ListView本身可以点击即可以消耗父View分发的事件： setClickable(true); **
 
-###### 局部刷新ListView
+#### 局部刷新ListView
 **实现原理：**<br> 1）找到需要更新的item在adapter中的位置<br> 2）更新adapter中item的数据data<br> 3）如果该item在listView当前屏的可见范围内则更新内容，否则不需要更新，待下次adapter刷新全部时再刷新
 
 方案一：获取itemView里面的控件直接设置
@@ -141,7 +142,9 @@ private void updateSingle(int position) {
         }
     }
 ~~~
-###### RecycleBin机制
+
+
+#### RecycleBin机制
 节选自部分的源码
 
 ~~~
