@@ -103,7 +103,7 @@ PS：关于MeasureSpec的生成规则<br>
   int heightMeasureSpec = MeasureSpec.makeMeasureSpec(height's dp,MeasureSpec.EXACTLY);
   view.measure(widthMeasureSpec,heightMeasureSpec);
 ~~~
-情况三：**wrap_content**<br><br>
+情况三：**wrap_content**
 
 利用最大值构建MeasureSpec
 
@@ -126,7 +126,8 @@ PS：关于MeasureSpec的生成规则<br>
 
 
 #### 小结
-View的大小由width和height决定。一个View实际上同时有两种width和height值<br><br>
-第一种是measure width和measure height。他们定义了view想要在父View中占用多少width和height（详情见Layout）。measured height和width可以通过getMeasuredWidth() 和 getMeasuredHeight()获得。<br><br>
+View的大小由width和height决定。一个View实际上同时有两种width和height值<br>
+
+第一种是measure width和measure height。他们定义了view想要在父View中占用多少width和height（详情见Layout）。measured height和width可以通过getMeasuredWidth() 和 getMeasuredHeight()获得。<br>
 
 第二种是width和height，有时候也叫做drawing width和drawing height。这些值定义了view在屏幕上绘制和Layout完成后的实际大小。这些值有可能跟measure width和height不同。width和height可以通过getWidth()和getHeight获得。 <br>
