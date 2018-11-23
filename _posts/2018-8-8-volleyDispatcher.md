@@ -37,12 +37,13 @@ tags:								#标签
     }
 ~~~
 
-* 在volley中有两个调度器，一个是CacheDispatcher，另一个是NetDispatcher，顾名思义一个是缓存调度器，一个是网络请求调度，忽略掉一些细节后，这篇笔记是关于调度机制的的学习。
+在volley中有两个调度器，一个是CacheDispatcher，另一个是NetDispatcher，顾名思义一个是缓存调度器，一个是网络请求调度，忽略掉一些细节后，这篇笔记是关于调度机制的的学习。<br>
 
 
 #### CacheDispatcher
 在volley中CacheDispatcher是一个调度线程
-* 成员变量
+成员变量
+
 ~~~
  public void run() {
         if (DEBUG) VolleyLog.v("start new dispatcher");
@@ -103,8 +104,10 @@ final Request request = (Request) this.mCacheQueue.take();
         }
 ~~~
 这里的逻辑很寻常，从缓存中取出一条请求，如果不存在在这个请求结果的话，则加入到网络调度线程队列中去，如果存在这条缓存结果时，继续往下走，然后判断是否过期了。如果过期了则同样加入到网络线程队列中去，接着判断是否需要刷新，不需要的话则直接返回缓存结果，否则加入到网络缓存队列中去。<br>
-目前为止还没有很体现调度机制，所以我们跳出这个processRequest方法，换一种思路去看一下CacheDispatcher中的成员变量。
-* WaitingRequestManager
+目前为止还没有很体现调度机制，所以我们跳出这个processRequest方法，换一种思路去看一下CacheDispatcher中的成员变量。<br><br>
+
+WaitingRequestManager
+
 ~~~
 if (mWaitingRequests.containsKey(cacheKey)) {
                 // There is already a request in flight. Queue up.
@@ -130,9 +133,10 @@ if (mWaitingRequests.containsKey(cacheKey)) {
                 return false;
             }
 ~~~
-首先判断这个集合中是否存在当前请求，如果存在的话则表示重复请求，则需要排队等待。
-* ResponseDelivery 
+首先判断这个集合中是否存在当前请求，如果存在的话则表示重复请求，则需要排队等待。<br><br>
+ResponseDelivery 
 这是一个结果分发器，由上面CacheDispatcher的源码可以知道，在缓存线程进行了一系列的处理之后就会把一个结果调派到结果分发器中去执行。
+
 ~~~
 public class ExecutorDelivery implements ResponseDelivery {
     private final Executor mResponsePoster;
@@ -201,19 +205,21 @@ public class ExecutorDelivery implements ResponseDelivery {
     }
 }
 ~~~
-* 在ExecutorDelivery的实现可以看到，它会和与外界传入的Handle和主线程进行绑定，所以分发消息是在主线程中执行的，这种绑定的设计是比较常见的，就比如picasso里面的调度机制也是由外部传进来一个UIhandler去和主线程绑定，这样做的目的也很显而易见，那就是可以很方便的在调用者的回调中操作UI。
-* 在ExecutorDelivery中也是向外公开了三个方法去通知结果分发器任务的执行的结果，响应失败就把错误发送给客户端，响应成功就执行下一步操作。
+在ExecutorDelivery的实现可以看到，它会和与外界传入的Handle和主线程进行绑定，所以分发消息是在主线程中执行的，这种绑定的设计是比较常见的，就比如picasso里面的调度机制也是由外部传进来一个UIhandler去和主线程绑定，这样做的目的也很显而易见，那就是可以很方便的在调用者的回调中操作UI。<br><br>
+
+在ExecutorDelivery中也是向外公开了三个方法去通知结果分发器任务的执行的结果，响应失败就把错误发送给客户端，响应成功就执行下一步操作。
 
 
 ##### 小结：目前来看CacheDispatch的一些实现已经看完了，然后就抛开一些与请求以及执行任务相关的逻辑，来分析一波调度机制
 
-* 在这里调度其实很简单，就是用一个调度线程，加一个死循环不断的从队列中获取到任务，然后进行相应逻辑的判断，可以根据自己逻辑的需要，在中途把这份请求添加到一个等待队列中排队等待或者其他任务的队列中，如果一系列判断成功之后，就通过结果调度者公开的方法去通知结果调度者执行相应的任务或则发送错误信息。
+在这里调度其实很简单，就是用一个调度线程，加一个死循环不断的从队列中获取到任务，然后进行相应逻辑的判断，可以根据自己逻辑的需要，在中途把这份请求添加到一个等待队列中排队等待或者其他任务的队列中，如果一系列判断成功之后，就通过结果调度者公开的方法去通知结果调度者执行相应的任务或则发送错误信息。
 
 
 
 ## NetworkDispatcher
 了解了关于缓存线程调度CacheDispatcher的工作原理，它里面会判断缓存是否存在、是否过期以及是否需要刷新等操作，如果不满足的话则需要加入到网络请求队列，从而让NetworkDispatcher去处理它。下面就继续来学习NetworkDispatcher实现过程，看看网络线程调度怎么实现的
-* 成员变量
+成员变量
+
 ~~~
 /** 请求队列 */
     private final BlockingQueue<Request<?>> mQueue;
@@ -224,7 +230,8 @@ public class ExecutorDelivery implements ResponseDelivery {
     /** 结果分发 */
     private final ResponseDelivery mDelivery;
 ~~~
-* 构建过程
+构建过程
+
 ~~~
 public NetworkDispatcher(BlockingQueue<Request<?>> queue,
             Network network, Cache cache, ResponseDelivery delivery) {
@@ -234,7 +241,8 @@ public NetworkDispatcher(BlockingQueue<Request<?>> queue,
         mDelivery = delivery;
     }
 ~~~
-* run方法实现
+run方法实现
+
 ~~~
 @Override
     public void run() {
