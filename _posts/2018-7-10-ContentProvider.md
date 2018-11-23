@@ -21,7 +21,8 @@ tags:								#标签
 5）编写内容提供者的onCreate（）、query（）、insert（）、update（）、delete（）、getType（）等方法。
 
 #### 关于getType（）方法以及MIMEType：
-* 根据给定的 URI 来实现处理 MIME类型的请求, 对于单条记录返回的 MIME 类型是以 vnd.android.cursor.item 开始的, 对于多条记录返回的MIME类型是以vnd.android.cursor.dir/ 开始的 这个方法可以在多线程环境下被调用。
+根据给定的 URI 来实现处理 MIME类型的请求, 对于单条记录返回的 MIME 类型是以 vnd.android.cursor.item 开始的, 对于多条记录返回的MIME类型是以vnd.android.cursor.dir/ 开始的 这个方法可以在多线程环境下被调用。
+
 ~~~
  @Override  
     public String getType(Uri uri) {  
