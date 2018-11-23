@@ -13,12 +13,15 @@ tags:								#标签
 
 
 ## 关于Android应用多进程
-### android:process
-* 应用实现多进程需要依赖于android:process这个属性
-* 适用元素：Application, Activity, BroadcastReceiver, Service, ContentProvider。
-* 通常情况下，这个属性的值应该是”:“开头。表示这个进程是应用私有的。无法在在跨应用之间共用。
-* 如果该属性值以小写字母开头，表示这个进程为全局进程。可以被多个应用共用。
 
+####  android:process
+* 应用实现多进程需要依赖于android:process这个属性
+
+* 适用元素：Application, Activity, BroadcastReceiver, Service, ContentProvider。
+
+* 通常情况下，这个属性的值应该是”:“开头。表示这个进程是应用私有的。无法在在跨应用之间共用。
+
+* 如果该属性值以小写字母开头，表示这个进程为全局进程。可以被多个应用共用。
 
 
 #### 应用多进程有什么好处
