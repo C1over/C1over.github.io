@@ -20,9 +20,13 @@ tags:								#标签
 3）而在Android中，Activity和Fragment一般都承担起了Contoller的作用，根据从View层输入的指令，在model层选取数据，然后执行相应的操作并产生最后的结果
 * 各层的关系：
   ![](https://images2015.cnblogs.com/blog/580800/201702/580800-20170211210639776-94649080.png)
+
+
 ###### MVC构架的优劣势：
 * 优势：耦合度较低，可以实现模块的复用，维护性相对较强。
 * 劣势：1、V和M之间不匹配,用户界面和流程要考虑易用性,用户体验优化同时考虑业务流程的精确和无错。 <br>           2、C和M之间界线不清,什么样的逻辑是界面逻辑,什么样的逻辑是业务逻辑,很难定义清楚。<br>           3、V的变化不能完全由Model控制,即observer模式不足以支持复杂的用户交互.这其实要求VC之间要有依赖。
+
+
 ## MVP
 ##### 为什么使用MVP构架
 上面也说到了MVC定义不够明确，而由于Android的特殊性，使得Activity同时担任V和C两个角色，这样就不满足单一责任原则了，而且当业务逻辑多起来了之后，Activity中的代码就会显得有点臃肿。
@@ -38,8 +42,12 @@ tags:								#标签
 * **在MVP构架中，Activity的定义更加明确，不再像MVC那样去同时承担V和C，而是充当V位**
 
 * **给上一点补充：MVP的设计思想是认为VC的绑定属于不可避免的情况，但可以加强P的能力,V变成只显示,P提供数据给V,把双向依赖简化为P直接依赖于V。**
+
+
 #### MVP的小案例
 **以一个登陆界面的小demo为例**
+
+
 ###### 登录回调接口：
 ~~~
 public interface OnLoginFinishedListener{
@@ -259,5 +267,7 @@ LoginPresenterImpl implements LoginPresenter, OnLoginFinishedListener {
     }
 }
 ~~~
+
+
 ###### 该项目的UML图：
 ![](https://upload-images.jianshu.io/upload_images/1833901-4e682cec6dde1a24.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/700)
