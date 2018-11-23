@@ -17,7 +17,9 @@ Proguard被人们熟知的是它的混淆功能，根据Proguard帮助文档的�
 * 优化（Optimize） : 分析和优化Java字节码
 * 混淆（Obfuscate）: 使用简短的无意义的名称，对类，字段和方法进行重命名
 * 预检（Preveirfy）: 用来对Java class进行预验证（预验证主要是针对JME开发来说的，Android中没有预验证过程，默认是关闭）<br>
+
 **补充说明：根据proguard-android-optimize.txt对optimize的描述，在Android中使用该功能是有潜在风险的，并不能保证在所有版本的Dalvik虚拟机上正常运行，该选项默认是关闭的，如果开启，请做好全面的测试。在Android项目中，我们在相应module下的build.gradle文件中会看到**<br>
+
 ~~~
  buildTypes {
         release {
@@ -27,6 +29,8 @@ Proguard被人们熟知的是它的混淆功能，根据Proguard帮助文档的�
     }
 ~~~
 其中 minifyEnabled 为true是开启Proguard的功能，false是关闭。
+
+
 ### Proguard的基本规则
 ~~~
 -keep class cn.hadcn.test.**
@@ -100,12 +104,16 @@ methods;  //匹配所有方法方法<br>
 }
 ~~~
 9）发布一款应用除了设minifyEnabled为ture，你也应该设置zipAlignEnabled为true，像Google Play强制要求开发者上传的应用必须是经过zipAlign的，zipAlign可以让安装包中的资源按4字节对齐，这样可以减少应用在运行时的内存消耗。<br>
+
+
 ### Proguard的工作流程
 Proguard工作流程是对输入的jars经过shrink->optimize->obfuscate->preveirfy依次处理，而library jars是input jars运行所依赖的包，比如Java运行时的rt.jar，Android运行时android.jar，这些jars在上述处理过程中不会有任何改变，仅是作为输入jars的依赖。<br>
 Q:Proguard是怎么知道哪些类，方法，成员变量等是无用的呢?<br>
 A:，以此来确定哪些部分未使用到。类似于hotspot虚拟机对可回收对象的判定，从GC Roots出发，进行可达性的判断，不可达的为可回收对象。Entry Points非常重要，Proguard的压缩，优化，混淆功能是以Entry Point作为依据的(预检不需要以此为依据)。<br>
 **对于可达性判断的小简述：可达性算法(GC Roots Tracing)：从GC Roots作为起点开始搜索，那么整个连通图中的对象便都是活对象，对于GC Roots无法到达的对象便成了垃圾回收的对象，随时可被GC回收。**<br>
 在压缩过程中，Proguard从Entry Points出发，递归检索，删除那些没有使用到的类和类的成员，在接下来的优化过程中，那些非Entry Points的类和方法会被设置成private，static或final，没有使用到的参数会被移除，有些方法可能会被标记为内联的，在混淆过程中，会对非EntryPoint的类和类的成员进行重命名，也就是用其它无意义的名称代替。我们在配置文件中用-keep保留的部分属于Entry Point，所以不会被重命名。
+
+
 ### Proguard配置文件的依据
 说起重命名，为什么需要保留一些类和类的成员(方法和变量)不被重命名呢 ? 原因是Proguard对class文件经过一系列处理后，能保证功能上和原来是一样的，但有些情况它却不能良好的处理，比如我们代码中有些功能依赖于它们原来的名字，如反射功能，native调用(函数签名)等，如果换成其它名字，会出现找不到，不对应的情况，可能引起程序崩溃，或者我们的对外提供了一些功能，必须保持原来的名字，才能保证其它依赖这些功能的模块能正确的运行等。
 这就是我们为什么要配置-keep选项的原因之一，还有一个原因是我们要用-keep告诉Proguard程序的入口（带有-keep的选项都会作为Entry Point），以此来确定哪些是未被使用的类和类的成员，方法等，并删除它们，因此，我们要针对我们的项目配置对应的选项。当然Proguard不仅提供了-keep选项，还有一些其它配置选项，比如-dontoptimize 对输入的Java class 文件不进行优化处理，-verbose 生成混淆后的映射文件等。
