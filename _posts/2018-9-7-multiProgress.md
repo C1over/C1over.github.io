@@ -88,12 +88,17 @@ AIDL的语法十分简单，与Java语言基本保持一致，需要记住的规
 2）AIDL支持的数据类型分为如下几种：
 
 * 八种基本数据类型：byte、char、short、int、long、float、double、boolean、String、CharSequence
+
 * 实现了Parcelable接口的数据类型
+
 * List 类型。List承载的数据必须是AIDL支持的类型，或者是其它声明的AIDL对象
+
 * Map类型。Map承载的数据必须是AIDL支持的类型，或者是其它声明的AIDL对象
 
-3）AIDL文件可以分为两类。一类用来声明实现了Parcelable接口的数据类型，以供其他AIDL文件使用那些非默认支持的数据类型。还有一类是用来定义接口方法，声明要暴露哪些接口给客户端调用，定向Tag就是用来标注这些方法的参数值。<br>
-4）定向Tag。定向Tag表示在跨进程通信中数据的流向，用于标注方法的参数值，分为in、out、inout三种。其中in表示数据只能由客户端流向服务端，out表示数据只能由服务端流向客户端，而inout则表示数据可在服务端与客户端之间双向流通。此外，如果AIDL方法接口的参数类型是：基本数据类型、String、CharSequence或者其他AIDL文件定义的方法接口，那么这些参数值得定向Tag默认是且只能是in，所以除了这些这些类型外，其他参数值都需要明确标注使用哪种定向Tag。<br>
+  <br>
+
+3）AIDL文件可以分为两类。一类用来声明实现了Parcelable接口的数据类型，以供其他AIDL文件使用那些非默认支持的数据类型。还有一类是用来定义接口方法，声明要暴露哪些接口给客户端调用，定向Tag就是用来标注这些方法的参数值。<br><br>
+4）定向Tag。定向Tag表示在跨进程通信中数据的流向，用于标注方法的参数值，分为in、out、inout三种。其中in表示数据只能由客户端流向服务端，out表示数据只能由服务端流向客户端，而inout则表示数据可在服务端与客户端之间双向流通。此外，如果AIDL方法接口的参数类型是：基本数据类型、String、CharSequence或者其他AIDL文件定义的方法接口，那么这些参数值得定向Tag默认是且只能是in，所以除了这些这些类型外，其他参数值都需要明确标注使用哪种定向Tag。<br><br>
 5）明确导包。在AIDL文件中需要明确标明引用到的数据类型所在的包名，即使两个文件处于同个包名下
 ps:如果不明确导包AS就会出现build-tools\24.0.1\aidl.exe'' finished with non-zero exit value 1的BUG
 
@@ -851,10 +856,10 @@ public class MainActivity extends Activity {
 ~~~
 在这里也是手动的实现AIDL帮我们实现的返回代理Binder的工作，而这些操作也是必须的，因为客户端无法直接通过这个打包的Binder和服务端通信，因此客户端必须借助Proxy类来和服务端通信，这里Proxy的作用就是代理的作用，客户端所有的请求全部通过Proxy来代理。
 #### 小总结
-* （1）为每个业务模块创建AIDL接口，以及实现其接口的方法。
-* （2）创建IBinderPool.aidl文件，定义queryBinder(int BinderCode)方法，客户端通过调用该方法返回特定的Binder对象。
-* （3）创建BinderPoolService服务端，在onBind方法返回实例化的BinderPool.IBinderPoolImpl对象。
-* （4）创建BinderPool类，在该类实现客户端与服务端的连接，解决线程同步的问题，设置Binder的死亡代理等。在onServiceConnected()方法内，获取到IBinderPool的代理对象。此外，IBinderPool的实现类：IBinderPoolImpl是BinderPool的内部类，实现了IBinderPool.aidl的方法：queryBinder()。
+* 为每个业务模块创建AIDL接口，以及实现其接口的方法。
+* 创建IBinderPool.aidl文件，定义queryBinder(int BinderCode)方法，客户端通过调用该方法返回特定的Binder对象。
+* 创建BinderPoolService服务端，在onBind方法返回实例化的BinderPool.IBinderPoolImpl对象。
+* 创建BinderPool类，在该类实现客户端与服务端的连接，解决线程同步的问题，设置Binder的死亡代理等。在onServiceConnected()方法内，获取到IBinderPool的代理对象。此外，IBinderPool的实现类：IBinderPoolImpl是BinderPool的内部类，实现了IBinderPool.aidl的方法：queryBinder()。
 
 
 
