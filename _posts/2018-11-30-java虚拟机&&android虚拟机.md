@@ -2,7 +2,7 @@
 layout:     post   				    
 title:     浅入虚拟机（二）  				 
 subtitle:  java虚拟机&&android虚拟机     #副标题
-date:       2018-11-24			   	# 时间
+date:       2018-11-30			   	# 时间
 author:     Cc1over				# 作者
 header-img: img/post-bg-2015.jpg 	#这篇文章标题背景图片
 catalog: true 						# 是否归档
