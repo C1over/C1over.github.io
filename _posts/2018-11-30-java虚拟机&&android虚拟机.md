@@ -189,18 +189,13 @@ AOT编译模式遇到的困境：
 * 系统快速更新
 
 在 AOT 阶段，它带来的好处：
-
 * 快速启动，更好的运行性能
 * 低消耗：CPU，储存空间，电量…
 
 在ART混合编译模式下：
-
 * 一些用户只使用App中的一部分功能，只有这些被频繁使用的部分（这个功能涉及到的代码）才值得被编译成 native code
-
 * 在 JIT 阶段，我们可以很容易的找到经常被使用的代码
-
 * 使用 AOT 来加快这些经常使用的用例
-
 * 避免在一些基本不适用的代码上花费开销
 
 
@@ -230,7 +225,6 @@ AOT编译模式遇到的困境：
 
 
 参考资料：
-
 * https://blog.csdn.net/anjoyandroid/article/details/78609971
 * http://286.iteye.com/blog/1931174
 * https://blog.csdn.net/Luoshengyang/article/details/8852432
