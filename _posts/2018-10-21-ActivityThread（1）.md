@@ -1,6 +1,6 @@
 ---
 layout:     post   				    
-title:  ActivityThread（1）				 
+title:  ActivityThread				 
 subtitle:  framework   #副标题
 date:       2018-10-21			   	# 时间
 author:     Cc1over				# 作者

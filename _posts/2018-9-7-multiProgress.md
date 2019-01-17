@@ -1,6 +1,6 @@
 ---
 layout:     post   				    
-title:  多进程（1）				 
+title:     多进程编程				 
 subtitle:  IPC     #副标题
 date:       2018-9-7			   	# 时间
 author:     Cc1over				# 作者

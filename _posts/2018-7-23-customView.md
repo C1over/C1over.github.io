@@ -1,6 +1,6 @@
 ---
 layout:     post   				    
-title:    自定义view  （1）				 
+title:    自定义view				 
 subtitle:  view     #副标题
 date:       2018-7-23			   	# 时间
 author:     Cc1over				# 作者
