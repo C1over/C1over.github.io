@@ -98,5 +98,13 @@ service-worker: true
 
 # Friends
 friends: [
+   {
+        title: "Allen-Yu",
+        href:  "https://i.loli.net/2018/11/04/5bde51f7304a7.jpg"
+    }
+    {
+        title: "N0tExpectErr0r,
+        href:  "http://blog.n0texpecterr0r.cn/wp-content/uploads/2018/07/vida_1532310062108-300x300.png"
+    }
    
 ]
