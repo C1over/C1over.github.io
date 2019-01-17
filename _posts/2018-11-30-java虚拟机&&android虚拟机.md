@@ -1,6 +1,6 @@
 ---
 layout:     post   				    
-title:     浅入虚拟机（二）  				 
+title:     浅入虚拟机(二)  				 
 subtitle:  java虚拟机&&android虚拟机     #副标题
 date:       2018-11-30			   	# 时间
 author:     Cc1over				# 作者

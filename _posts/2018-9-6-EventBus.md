@@ -1,6 +1,6 @@
 ---
 layout:     post   				    
-title:  EventBus（1）				 
+title:  EventBus				 
 subtitle:  响应式框架     #副标题
 date:       2018-9-6			   	# 时间
 author:     Cc1over				# 作者
