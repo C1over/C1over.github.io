@@ -93,17 +93,17 @@ tags:								#标签
 
 > 对象创建的内存申请过程
 
-1）JVM会试图为相关的Java对象在Eden中初始化一块内存区域<br>
+* JVM会试图为相关的Java对象在Eden中初始化一块内存区域
 
-2）当Eden空间足够时，内存申请结束。否则进入第三步<br>
+* 当Eden空间足够时，内存申请结束。否则进入第三步
 
-3）JVM试图释放在Eden中所有不活跃的对象，释放后若Eden空间仍然不足以放入新对象，则试图将部分Eden中部分活跃的对象放入Survivor区。
+* JVM试图释放在Eden中所有不活跃的对象，释放后若Eden空间仍然不足以放入新对象，则试图将部分Eden中部分活跃的对象放入Survivor区
 
-4）Suvivor区被用来作为新生代和老年代的缓冲区域，当老年代空间足够时，Survivor区的对象会被移动到老年代，否则会被保留在Survivor区
+* Suvivor区被用来作为新生代和老年代的缓冲区域，当老年代空间足够时，Survivor区的对象会被移动到老年代，否则会被保留在Survivor区
 
-5）当老年代空间不够时，JVM会在老年代进行垃圾收集（Major GC/Full GC）
+* 当老年代空间不够时，JVM会在老年代进行垃圾收集（Major GC/Full GC）
 
-6）Major GC/Full G后，若Survivor 及老年代仍然无法存放从Eden 复制过来的部分对象，导致JVM 无法在Eden 区为新对象创建内存区域，JVM 此时就会抛出内存不足的异常。
+* Major GC/Full G后，若Survivor 及老年代仍然无法存放从Eden 复制过来的部分对象，导致JVM 无法在Eden 区为新对象创建内存区域，JVM 此时就会抛出内存不足的异常。
 
 
 
