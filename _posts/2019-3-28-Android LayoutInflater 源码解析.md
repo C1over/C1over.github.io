@@ -18,7 +18,7 @@ tags:								#标签
 
 由于笔者之前对LayoutInflate.inflate方法的传入参数以及内部实现比较模糊，之前大一考核期看过但是最近在setContentView源码的时候又想不起来，所以决定写一篇笔记去记录一下这个点
 
-###[LayoutInflate->inflate] 
+### [LayoutInflate->inflate] 
 
 ```java
 public View inflate(XmlPullParser parser, @Nullable ViewGroup root, boolean attachToRoot) {
