@@ -1,7 +1,7 @@
 ---
 layout:     post   				    
 title:    一个 view的宽高BUG  				 
-subtitle:       #副标题
+subtitle:  BUG记录     #副标题
 date:       2018-7-17			   	# 时间
 author:     Cc1over				# 作者
 header-img: img/post-bg-2015.jpg 	#这篇文章标题背景图片
