@@ -1,7 +1,7 @@
 ---
 layout:     post   				    
 title:      微信资源混淆AndResGuard源码解析(一)	 
-subtitle:   -apk学习系列
+subtitle:   -apk学习系列\n
             -AndResGuard之解析resource.arsc    #副标题
 date:       2019-8-8		   	# 时间
 author:     Cc1over				# 作者
