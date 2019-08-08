@@ -1060,12 +1060,6 @@ private void readValue(boolean flags, int specNamesId) throws IOException, Andro
 * 然后就在**mApkDecoder**移除已经拷贝过的资源文件
 * 然后把对应value中data这个索引值和混淆后文件路径添加到**mTableStringsResguard**这个map中保存起来
 
-## 暂时忽略
-
-* **处理重复资源**
-* **文件压缩**
-* **见下一篇**
-
 ## 总结
 
 整个读取的操作分为两次：
