@@ -329,13 +329,13 @@ private final void transfer(Node<K,V>[] tab, Node<K,V>[] nextTab) {
 
 **步骤2：**在这一步中会创建容量为旧容量2倍的新数组，然后保存在**nextTable**成员中，并且用成员**transferIndex**记录下旧容量
 
-**步骤3：**这一部分暂时没理解 // todo
+**步骤3：**通过 for自循环处理每个槽位中的链表元素，默认 advace为真，通过CAS设置 transferIndex属性值，并初始化 i和 bound值， i指当前处理的槽位序号， bound指需要处理的槽位边界
 
 **步骤4：**表示完成转移，完成赋值，并且**sizeCtl**赋值为新容量的0.75倍
 
-**步骤5：**数组中把null的元素设置为ForwardingNode节点(hash值为MOVED[-1]
+**步骤5：**数组中把null的元素设置为ForwardingNode节点(hash值为MOVED[-1]，用于告诉其它线程该位置已经处理过了 
 
-**步骤6：**判断数组中的元素是否替换为ForwardingNode节点
+**步骤6：**判断数组中的元素是否替换为ForwardingNode节点，如果是那就说明这个位置已经被处理过了，则直接跳过，继续处理前一个的节点 
 
 **步骤7：**进入这里之后就会给对应的节点进行加锁，在此之后会判断一下hash值，如果大于等于0说明是正常的节点，不然就不用操作了
 
@@ -391,11 +391,52 @@ public V get(Object key) {
 
 **步骤2：**计算key的hash值来定位元素在数组中的位置
 
-**步骤3：**遍历链表，找相同key，获得value
+**步骤3：**在这个过程中while循环中的操作就是遍历这个链表，找到相同的key，但是有一个小细节就是这里会判断eh<0的状况，也就是当前正在扩容，而且该节点已经被处理
+
+## [ForwardingNode-> find]
+
+```java
+Node<K,V> find(int h, Object k) {
+            // loop to avoid arbitrarily deep recursion on forwarding nodes
+            outer: for (Node<K,V>[] tab = nextTable;;) {
+                Node<K,V> e; int n;
+                // 1
+                if (k == null || tab == null || (n = tab.length) == 0 ||
+                    (e = tabAt(tab, (n - 1) & h)) == null)
+                    return null;
+                for (;;) {
+                    int eh; K ek;
+                    // 2
+                    if ((eh = e.hash) == h &&
+                        ((ek = e.key) == k || (ek != null && k.equals(ek))))
+                        return e;
+                    if (eh < 0) {
+                        if (e instanceof ForwardingNode) {
+                            tab = ((ForwardingNode<K,V>)e).nextTable;
+                            continue outer;
+                        }
+                        else
+                            return e.find(h, k);
+                    }
+                    if ((e = e.next) == null)
+                        return null;
+                }
+            }
+        }
+    }
+```
+
+**步骤1：**对扩容后的新数组进行有效校验
+
+**步骤2：**如果找到了对应的key就返回value，否则就去ForwardingNode中保存的nextTable中查找，这也是为什么构建ForwardingNode的时候要传入nextTable的原因了
+
+总的来说：读操作的逻辑就是现在table数组中找，如果遇到扩容中的情况，那就去新数组中查找对应的值
 
 ## [Summary]
 
 在1.8版的ConcurrentHashMap中消除了segment的概念，同步处理主要是通过synchronized和UNSAFE，在取得sizeCtl、某个位置的Node的时候，使用的都是unsafe的方法，来达到并发安全的目的，当需要在某个位置设置节点的时候，则会通过synchronized的同步机制来锁定该位置的节点，而其实除了这点区别外，1.8相比1.7ConcurrentHashMap在插入时的优化方案相对不一，1.7版本会合理利用自旋的时候创建节点，而由于1.8版本用的是synchronize，失去了部分灵活性，但是设计者又会在获得锁之前判断是否在扩容，如果在扩容则让该线程也参与
+
+总的来说，其实在1.8版本ConcurrentHashMap的实现中，由于把锁的粒度从segment降到链表头，所以在1.8版本中的性能瓶颈其实就是扩容的过程，而扩容的过程中，其实优化思想确实和1.7类似，那就既然自旋或者睡眠都是在浪费时间，那不如多线程来扩容，进一步提升扩容的效率
 
 
 
@@ -403,7 +444,7 @@ public V get(Object key) {
 
 [ConcurrentHashMap](https://www.cnblogs.com/zerotomax/p/8687425.html)
 
-
+[ConcurrentHashMap进阶之扩容实现](<https://mp.weixin.qq.com/s?src=11×tamp=1570715071&ver=1904&signature=YO7EqTBN-8spm25SnlxEbI28Yx5tRdc-t-oOXbpnYk70r2GfTMI5wecg4WDg75pUyV3szsEF2BVeJYqL9E*v8BC95eGJIcSh*1GmraahTQA7ICkkT6G5trerfIW36pFO&new=1> )
 
 
 
