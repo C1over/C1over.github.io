@@ -444,7 +444,7 @@ Node<K,V> find(int h, Object k) {
 
 [ConcurrentHashMap](https://www.cnblogs.com/zerotomax/p/8687425.html)
 
-[ConcurrentHashMap进阶之扩容实现](<https://mp.weixin.qq.com/s?src=11×tamp=1570715071&ver=1904&signature=YO7EqTBN-8spm25SnlxEbI28Yx5tRdc-t-oOXbpnYk70r2GfTMI5wecg4WDg75pUyV3szsEF2BVeJYqL9E*v8BC95eGJIcSh*1GmraahTQA7ICkkT6G5trerfIW36pFO&new=1> )
+[[深入理解HashMap+ConcurrentHashMap的扩容策略](https://www.cnblogs.com/lfs2640666960/p/9621461.html)
 
 
 
