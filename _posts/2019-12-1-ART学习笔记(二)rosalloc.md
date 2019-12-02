@@ -1,6 +1,6 @@
 ---
 layout:     post   				    
-title:      ART学习笔记(二)Rosalloc
+title:      ART学习笔记(二)RosAlloc
 subtitle:   ART学习笔记   #副标题
 date:       2019-12-2		   	# 时间
 author:     Cc1over				# 作者
@@ -10,7 +10,7 @@ tags:								#标签
     - ART学习笔记
 ---
 
-# ART学习笔记(二)Rosalloc
+# ART学习笔记(二)RosAlloc
 
 ## 前言
 
