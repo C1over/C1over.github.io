@@ -1,6 +1,6 @@
 ---
 layout:     post   				    
-title:      ART学习笔记(一)Rosalloc
+title:      ART学习笔记(二)Rosalloc
 subtitle:   ART学习笔记   #副标题
 date:       2019-12-2		   	# 时间
 author:     Cc1over				# 作者
@@ -115,6 +115,7 @@ void* RosAlloc::AllocFromRun(Thread* self, size_t size, size_t* bytes_allocated,
            if(thread_local_run->MergeThreadLocalFreeListToFreeList) {
                // ......
            } else {
+               full_runs_[idx].insert(thread_local_run);
                thread_local_run = RefillRun(self,idx);
                thread_local_run->SetIsThreadLocal(true);
                self->SetRosAllocRun(idx, thread_local_run);
@@ -139,6 +140,7 @@ void* RosAlloc::AllocFromRun(Thread* self, size_t size, size_t* bytes_allocated,
   * 调用**RefillRun**重新分配一个Run对象
   * 把这个新Run对象设置为thread_local_run
   * 在这个新的Run中分配内存
+  * 而这个已满的Run对象会被放到full_runs_数组保存起来
 * 当所需内存超过128字节，将从RosAlloc内部的资源池进行分配，不同大小的资源池使用不同的同步锁
 
 ## [rosalloc.cc->RosAlloc::RefillRun]
