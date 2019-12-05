@@ -275,6 +275,10 @@ private static class ReferenceQueueDaemon extends Daemon {
 
 而当与**FinalizerReference**相关联的**ReferenceQueue**就是**FinalizerReference**中的静态变量**queue**，而当**FinalizerDaemon**线程被唤醒之后，只要不停地从这个静态变量**queue**中取出**FinalizerReference**，然后根据**FinalizerReference**中提前设置好的**zombie**成员变量，就可以找到实际对象，然后调用**finalize**方法
 
+来到这里，其实所有有关**finialize**函数调用谜题都得到了解决，但是**FinalizerReference**是什么时候和这个静态变量**queue**关联起来的呢？
+
+答案其实就是类加载，在类加载过程中如果该类实现了**finalize**函数，就会给这个**kclass**标记上一个**kAccClassIsFinalizable**的标记，而划上这个标记的类在执行**Alloc**方法的时候就会在C++层通过JNI调用到Java层**FinalizerReference**的**add**方法，而就是在这个时候，**FinalizerReference**对象得到创建，并且绑定它自己的静态变量**queue**
+
 ## # 总结
 
 * **SoftReference：**不保证每次GC都会回收它们所指向的实际对象，具体到ART虚拟机，回收策略为**kGcTypeSticky**肯定不会回收
