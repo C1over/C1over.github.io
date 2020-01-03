@@ -2,7 +2,7 @@
 layout:     post   				    
 title:      Android资源学习(五)资源热修复
 subtitle:   Android资源学习系列   #副标题
-date:       2019-1-1		   	# 时间
+date:       2020-1-1		   	# 时间
 author:     Cc1over				# 作者
 header-img: img/post-bg-keybord.jpg              #这篇文章标题背景图片
 catalog: true 						# 是否归档
