@@ -74,11 +74,11 @@ tatic status_t makeFileResources(Bundle* bundle, const sp<AaptAssets>& assets,
 
 mark下之前在做源码解析时的笔记，点开就可以查看当时的笔记链接嘿嘿
 
-[微信资源混淆AndResGuard源码解析(一)](<https://cc1over.github.io/2019/08/08/%E5%BE%AE%E4%BF%A1%E8%B5%84%E6%BA%90%E6%B7%B7%E6%B7%86AndResGuard%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/> )
+[微信资源混淆AndResGuard源码解析(一)](<https://cc1over.github.io/2019/08/08/%E5%BE%AE%E4%BF%A1%E8%B5%84%E6%BA%90%E6%B7%B7%E6%B7%86AndResGuard%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/>)
 
 [微信资源混淆AndResGuard源码解析(二)](<https://cc1over.github.io/2019/08/09/%E5%BE%AE%E4%BF%A1%E8%B5%84%E6%BA%90%E6%B7%B7%E6%B7%86AndResGuard%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90(%E4%BA%8C)/>)
 
-[微信资源混淆AndResGuard源码解析(三)](<https://cc1over.github.io/2019/08/10/%E5%BE%AE%E4%BF%A1%E8%B5%84%E6%BA%90%E6%B7%B7%E6%B7%86AndResGuard%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90(%E4%B8%89)/> )
+[微信资源混淆AndResGuard源码解析(三)](<https://cc1over.github.io/2019/08/10/%E5%BE%AE%E4%BF%A1%E8%B5%84%E6%BA%90%E6%B7%B7%E6%B7%86AndResGuard%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90(%E4%B8%89)/>)
 
 ## 移除无用资源
 
