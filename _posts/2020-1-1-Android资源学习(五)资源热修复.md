@@ -828,7 +828,7 @@ public static void monkeyPatchExistingResources(Context context, String external
 
 但是读完Tinker源码依然有一个问题没有解决：
 
-* 对于deletedSet，为什么不在补丁包的生成就直接从pattern中移除，而要等到合并的时候在做呢？
+* 其实一开始我是看错了arsc的处理部分，但是现在也还没想明白为什么对arsc文件md5之后还要用AndroidParser判断arsc的entry是否一致？我暂时没有想到有什么情况是md5不一致，然后逻辑结构一致的情况！
 
 希望等我技术成长的一天，也能解决这些我今天解决不了的问题
 
