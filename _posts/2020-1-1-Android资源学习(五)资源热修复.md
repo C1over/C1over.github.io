@@ -826,9 +826,8 @@ public static void monkeyPatchExistingResources(Context context, String external
 
 其实Tinker资源热修复中加载这部分和instant run相差不大，主要的特点就是生成差量包，然后下发差量包，最后在本地进行合并生成resources.apk
 
-但是读完Tinker源码依然有两个问题没有解决：
+但是读完Tinker源码依然有一个问题没有解决：
 
-* 为什么Tinker不对arsc文件进行差量呢？如果差量不是也用BSDifff就好了吗？
 * 对于deletedSet，为什么不在补丁包的生成就直接从pattern中移除，而要等到合并的时候在做呢？
 
 希望等我技术成长的一天，也能解决这些我今天解决不了的问题
