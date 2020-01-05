@@ -698,7 +698,6 @@ private static boolean extractResourceDiffInternals(Context context, String dir,
 
 * 在补丁合并过程中起关键作用的除了resources_out.zip之外还有meta file文件，这个文件处理储存一些crc、md5等的校验信息之外，还储存了deletedSet、addedSet、modifySet、largeModifySet的序列化结果
 * 在补丁合并过程中一个小细节就是存储方式，对大文件进行归档存储，对其他文件就采用默认存储方式
-* 而可以看到其实合并补丁的过程中是会忽略一些删除的文件，而序列化deletedSet的目的其实就是移除pattern中被删除的文件
 
 ### TinkerResourcesLoader-> loadTinkerResources
 
