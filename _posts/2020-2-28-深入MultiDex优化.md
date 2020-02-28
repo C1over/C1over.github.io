@@ -389,4 +389,4 @@ static void install(ClassLoader loader,
 
 [面试官：今日头条启动很快，你觉得可能是做了哪些优化？](https://juejin.im/post/5d95f4a4f265da5b8f10714b)
 
-[Android开发高手课 22包体积优化(上)：如何减少安装包大小?](<https://time.geekbang.org/column/article/81202> )
+[Android开发高手课 22包体积优化(上)：如何减少安装包大小?](https://time.geekbang.org/column/article/81202)
