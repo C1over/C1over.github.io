@@ -97,9 +97,7 @@ private List<ExtractedDex> performExtractions() throws IOException {
     }
 ```
 
-先走到MultiDex过程中MultiDexExtractor对文件的获取过程，这里会从apk中解压出class2.dex...classN.dex，然后转调
-
-extract完成文件操作
+先走到MultiDex过程中MultiDexExtractor对文件的获取过程，这里会从apk中解压出class2.dex...classN.dex，然后转调extract完成文件操作
 
 ### MultiDexExtractor-> extract
 
@@ -156,7 +154,7 @@ private static void extract(ZipFile apk, ZipEntry dexFile, File extractTo,
 * Android系统低版本并不支持对dex文件直接加载
 * Android这种做法可能为了减少存储空间的占用
 
-而其实现在大部分的应用，包括我在学校团队做的项目，其实也只会兼容到Android4.4版本了，所以实际上MultiDex其实切切实实地成了需要减到Android4.4的应用，在启动速度优化方面的大户了
+而其实现在大部分的应用，包括我在学校团队做的项目，其实也只会兼容到Android4.4版本了，所以实际上MultiDex其实切切实实地成了需要兼容到Android4.4的应用，在启动速度优化方面的大户了
 
 而解决这个多余的解压重压缩的过程的解决方案也并非很难，因为已经有前辈帮我了写好了这套工具了，那就是Tinker，因此我们只需要对上述MultiDexExtractor中的两个方法进行改造就可以了
 
@@ -375,7 +373,7 @@ static void install(ClassLoader loader,
 其实从本次对Tinker文件的处理，以及是oatmeal方案的认知，或者再追溯到之前笔者深入学习Android资源的系列中的微信资源混淆库的分析，其实我还是掌握一种解决问题的方式或者说思路，其实有时候，一些系统的流程可能是我们性能优化专项中最大的性能瓶颈，而对于**文件结构的理解**是可以帮助我们克服或者说绕过这些性能瓶颈，实际的例子数不胜数：
 
 * Tinker中根据Zip文件的结构实现压缩率的迁移，从而规避了解压和压缩到来的时耗
-* 移除无用资源、资源混淆、以及之前笔者的一文[多渠道打包方案调研思考](https://cc1over.github.io/2019/07/31/%E5%A4%9A%E6%B8%A0%E9%81%93%E6%89%93%E5%8C%85%E6%96%B9%E6%A1%88%E8%B0%83%E7%A0%94%E6%80%9D%E8%80%83/])，可以通过对**resources.arsc**文件的理解帮助我们绕开回编译以及再次反编译的过程，进一步减少耗时
+* 移除无用资源、资源混淆、以及之前笔者的一文[多渠道打包方案调研思考](https://cc1over.github.io/2019/07/31/%E5%A4%9A%E6%B8%A0%E9%81%93%E6%89%93%E5%8C%85%E6%96%B9%E6%A1%88%E8%B0%83%E7%A0%94%E6%80%9D%E8%80%83/])，可以通过对**resources.arsc**文件的理解帮助我们绕开反编译以及再次回编译的过程，进一步减少耗时
 * V2签名的多渠道打包方案，通过对Zip文件的理解，可以绕开Android系统对apk的一些校验
 * oatmeal，通过对Dex文件结构的理解，可以绕开fork进程所带来的一些时耗
 
